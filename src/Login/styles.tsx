@@ -10,12 +10,17 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: "flex-end",
     alignItems: "center",
+    marginTop: 200,
+    marginBottom: 300,
+    marginLeft: 40,
+    marginRight: 40,
   },
   text:{
     textAlign: "center",
-    fontSize: 56,
+    fontSize: 52,
     color: "white",
-    fontFamily: "FasterOne"
+    fontFamily: "FasterOne",
+    marginBottom: 150
   }
 });
 

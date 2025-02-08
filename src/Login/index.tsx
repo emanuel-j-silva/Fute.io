@@ -1,5 +1,6 @@
 import React from "react";
 import {Text, View, ImageBackground} from "react-native"
+import Form from "../Form";
 import styles from "./styles";
 
 function Login() {
@@ -11,6 +12,7 @@ function Login() {
     >
         <View style={styles.overlay}>
             <Text style={styles.text}>Fute.io</Text>
+            <Form/>
         </View>
     </ImageBackground>
     );
