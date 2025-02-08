@@ -1,13 +1,13 @@
 import React from "react";
 import {Text, View, ImageBackground} from "react-native"
-import Form from "../Form";
+import Form from "../../components/Form";
 import styles from "./styles";
 
 function Login() {
     return(
     <ImageBackground
         style = {styles.background}
-        source={require("../.././assets/images/login-wallpaper.png")}
+        source={require("../../../assets/images/login-wallpaper.png")}
         resizeMode="cover"
     >
         <View style={styles.overlay}>
