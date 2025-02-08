@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
   },
   text:{
     textAlign: "center",
-    fontSize: 30,
-    color: "white"
+    fontSize: 56,
+    color: "white",
+    fontFamily: "FasterOne"
   }
 });
 
