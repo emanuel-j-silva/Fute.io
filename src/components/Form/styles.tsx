@@ -2,16 +2,21 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#c1c1c5",
-        minWidth: "100%",
+        flex:1,
+        backgroundColor: "#c1c1c580",
+        maxWidth: "100%",
         maxHeight: "100%",
-        opacity: 0.5,
         borderRadius: 25,
+        rowGap: 25,
+        paddingTop: 50,
+        paddingBottom: 30,
+        paddingLeft: 10,
+        paddingRight: 10
     },
     text:{
         color: "white",
-        padding: 10,
-        textAlign: "center"
+        alignSelf: "center",
+        fontFamily: "FasterOne"
     }
 });
 

@@ -1,17 +1,22 @@
 import React from "react";
-import {Text, View} from "react-native"
+import {View, Text} from "react-native"
+import Input from "../Input";
+import CustomButton from "../CustomButton";
 import styles from "./styles";
 
 function Form(){
     return(
         <View style={styles.container}>
-            <Text style={styles.text}>Lorem ipsum dolor sit amet. 
-                Ea dolores tempora aut dolorum modi non iste Quis sit laudantium sint est 
-                aliquid corrupti! Est doloremque ipsa id ipsam tenetur id perspiciatis esse et 
-                harum galisum qui cumque impedit est repudiandae velit.
-            </Text>
+            <Input icon="email" placeholder="Email" defaultColor="#252534"/>            
+            <Input icon="password" placeholder="Senha" defaultColor="#252534"/>
+            <CustomButton title="Login" onPress={onPress}/>
+            <Text style={styles.text}>Criar conta</Text>
         </View>
     )   
+}
+
+function onPress(){
+
 }
 
 export default Form;

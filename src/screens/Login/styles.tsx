@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: "flex-end",
     alignItems: "center",
-    marginTop: 200,
-    marginBottom: 300,
+    marginTop: 150,
+    marginBottom: 150,
     marginLeft: 40,
     marginRight: 40,
   },
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     fontSize: 52,
     color: "white",
     fontFamily: "FasterOne",
-    marginBottom: 150
+    marginBottom: 100
   }
 });
 

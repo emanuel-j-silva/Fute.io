@@ -5,7 +5,14 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "flex-start",
+        minWidth: "100%",
+        maxHeight: "100%",
+        backgroundColor: "white",
+        borderRadius: 35
+    },
+    icon:{
+        padding: 10
     }
 });
 
