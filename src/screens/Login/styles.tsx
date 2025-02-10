@@ -8,12 +8,10 @@ const styles = StyleSheet.create({
   },
   overlay:{
     flex:1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 150,
-    marginBottom: 150,
-    marginLeft: 40,
-    marginRight: 40,
+    paddingHorizontal: 40,
+    paddingVertical: 40
   },
   text:{
     textAlign: "center",

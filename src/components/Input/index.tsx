@@ -19,8 +19,9 @@ function Input({icon, placeholder, defaultColor, size, ...rest}: InputProps){
                 size={size}
                 color={defaultColor}
             />}
-            <TextInput placeholder={placeholder}
+            <TextInput style={styles.textInput} placeholder={placeholder}
                 placeholderTextColor={defaultColor}
+                {...rest}
             />
         </View>
     );
