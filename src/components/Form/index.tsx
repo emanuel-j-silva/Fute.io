@@ -9,14 +9,12 @@ function Form(){
         <View style={styles.container}>
             <Input icon="email" placeholder="Email" defaultColor="#252534"/>            
             <Input icon="password" placeholder="Senha" defaultColor="#252534"/>
-            <CustomButton title="Login" onPress={onPress}/>
+            <CustomButton title="Login" onPress={onPress} pressedBackgroundColor="#48cae490"/> 
             <Text style={styles.text}>Criar conta</Text>
         </View>
     )   
 }
 
-function onPress(){
-
-}
+function onPress(){}
 
 export default Form;

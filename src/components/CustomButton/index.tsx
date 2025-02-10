@@ -5,18 +5,31 @@ import styles from "./styles";
 interface CustomButtonProps{
     title: string;
     onPress: (event: GestureResponderEvent) => void;
+    backgroundColor?: string;
+    pressedBackgroundColor?: string;
+    textColor?: string;
+    fontSize?: number;
+    fontFamily?: string;
 
 }
 
-function CustomButton({title, onPress}: CustomButtonProps){
+function CustomButton({title, onPress, 
+    backgroundColor = "#050517", 
+    pressedBackgroundColor, 
+    textColor = "white",
+    fontSize = 16,
+    fontFamily = "System"
+}: CustomButtonProps){
     return(
         <Pressable style={({ pressed }) => [
             styles.button,
-            pressed && styles.buttonPressed,
+            {backgroundColor: pressed ? pressedBackgroundColor : backgroundColor},
           ]}
           onPress={onPress}
         >
-            <Text style={styles.text}>{title}</Text>
+            <Text style={[styles.text, {color: textColor, fontSize, fontFamily}]}>
+                {title}
+            </Text>
         </Pressable>
     );
 }
