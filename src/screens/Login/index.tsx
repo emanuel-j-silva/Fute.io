@@ -2,8 +2,19 @@ import React from "react";
 import {Text, View, ImageBackground} from "react-native"
 import Form from "../../components/Form";
 import styles from "./styles";
+import { StackNavigationProp } from "@react-navigation/stack/lib/typescript/src/types";
 
-function Login() {
+type StackParamList = {
+    Login: undefined;
+    MainTabs: undefined;
+}
+
+type LoginScreenProps = {
+    navigation: StackNavigationProp<StackParamList, "Login">
+    route: StackNavigationProp<StackParamList, "Login">
+}
+
+function Login({ navigation }: LoginScreenProps) {
     return(
     <ImageBackground
         style = {styles.background}
@@ -12,7 +23,7 @@ function Login() {
     >
         <View style={styles.overlay}>
             <Text style={styles.text}>Fute.io</Text>
-            <Form/>
+            <Form navigation = {navigation}/>
         </View>
     </ImageBackground>
     );

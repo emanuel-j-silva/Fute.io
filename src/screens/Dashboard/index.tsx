@@ -2,7 +2,7 @@ import React from "react";
 import {Text, View, ImageBackground} from "react-native"
 import styles from "./styles";
 
-function Home() {
+function Dashboard() {
     return(
     <ImageBackground
         style = {styles.background}
@@ -16,4 +16,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Dashboard;
