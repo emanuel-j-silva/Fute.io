@@ -9,12 +9,7 @@ type StackParamList = {
     MainTabs: undefined;
 }
 
-type LoginScreenProps = {
-    navigation: StackNavigationProp<StackParamList, "Login">
-    route: StackNavigationProp<StackParamList, "Login">
-}
-
-function Login({ navigation }: LoginScreenProps) {
+function Login({ navigation }: { navigation: StackNavigationProp<StackParamList, 'Login'> }) {
     return(
     <ImageBackground
         style = {styles.background}

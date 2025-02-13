@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Login from './src/screens/Login';
 import Dashboard from './src/screens/Dashboard';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+SplashScreen.preventAutoHideAsync();
 
 type StackParamList = {
   Login: undefined;
@@ -46,6 +50,20 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     FasterOne: require('./assets/fonts/FasterOne.ttf'),
   });
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#6200ea" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
