@@ -16,7 +16,7 @@ function Dashboard() {
                 <InfoCard 
                 title="Último" 
                 subtitle="Sorteio" 
-                content={{text: "15/02/25", size: 24}}
+                content={{text: "15/02/25", size: 22}}
                 footer="Grupo Star"
                 />
                 <InfoCard 

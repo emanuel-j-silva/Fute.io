@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         borderRadius: 25,
         paddingTop: 15,
+        paddingHorizontal: 5
     },
     title:{
         fontSize: 16,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
     contentWithNoFotter:{
         fontFamily: "FasterOne",
         textAlign: "center",
-        marginTop: 20
+        marginTop: 15
     },
     footer:{
         fontSize: 14,

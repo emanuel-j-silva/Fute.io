@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        columnGap: 10
+        columnGap: 25
     },
     text:{
         textAlign: "center",
