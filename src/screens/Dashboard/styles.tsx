@@ -9,7 +9,14 @@ const styles = StyleSheet.create({
     overlay:{
         flex:1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginHorizontal: 18,
+    },
+    cardsRow:{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        columnGap: 10
     },
     text:{
         textAlign: "center",

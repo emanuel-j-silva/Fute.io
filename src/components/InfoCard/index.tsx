@@ -12,18 +12,24 @@ interface InfoCardProps {
     subtitle: string;
     content: Content;
     footer?: string;
-    defaultColor?: string;
+    primaryColor?: string;
+    secondaryColor?: string;
 }
 
-function InfoCard({title, subtitle, content, footer, defaultColor = "#050517"} :InfoCardProps){
+function InfoCard({title, subtitle, content, footer, 
+                    primaryColor = "#050517", secondaryColor = "#0077B6"} :InfoCardProps){
     return(
         <View style={styles.container} >
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subtitle}>{subtitle}</Text>
-            <Text style={[styles.content, {color: defaultColor}, 
-                {fontSize: content.size}]}>{content.text}
+            <Text style={[styles.title, {color: primaryColor}]}>{title}</Text>
+            <Text style={[styles.subtitle, {color: primaryColor}]}>{subtitle}</Text>
+            <Text style={[ footer ? styles.content : styles.contentWithNoFotter, 
+                {color: secondaryColor}, 
+                {fontSize: content.size}]}>
+                    {content.text}
             </Text>
-            <Text style={styles.footer}>{footer}</Text>
+            {footer && <Text style={[styles.footer, {color: primaryColor}]}>{footer}</Text>}
         </View>
     )
 }
+
+export default InfoCard;
