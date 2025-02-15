@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
 
     },
     subtitle:{
+
+    },
+    content:{
+        fontFamily: "FasterOne"
+    },
+    footer:{
         
     }
 });
