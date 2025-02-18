@@ -1,7 +1,7 @@
 import React from "react";
 import {View, ImageBackground} from "react-native"
-import InfoCard from "../../components/InfoCard";
-import DashboardHeader from "../../components/DashboardHeader";
+import InfoCard from "./components/InfoCard";
+import DashboardHeader from "./components/DashboardHeader";
 import styles from "./styles";
 
 function Dashboard() {

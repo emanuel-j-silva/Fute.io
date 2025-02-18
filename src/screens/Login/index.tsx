@@ -1,6 +1,6 @@
 import React from "react";
 import {Text, View, ImageBackground} from "react-native"
-import Form from "../../components/Form";
+import Form from "./components/Form";
 import styles from "./styles";
 import { StackNavigationProp } from "@react-navigation/stack/lib/typescript/src/types";
 

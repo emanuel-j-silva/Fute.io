@@ -1,8 +1,8 @@
 import React from "react";
 import {View, Text} from "react-native"
 import { StackNavigationProp } from '@react-navigation/stack';
-import Input from "../Input";
-import CustomButton from "../CustomButton";
+import Input from "../../../../components/Input";
+import CustomButton from "../../../../components/CustomButton";
 import styles from "./styles";
 
 type StackParamList = {
