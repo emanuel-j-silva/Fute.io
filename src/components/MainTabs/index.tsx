@@ -1,7 +1,9 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import Dashboard from '../../screens/Dashboard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import styles from './styles';
 
 type TabParamList = {
   Dashboard: undefined;
@@ -11,23 +13,37 @@ type TabParamList = {
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
 
+const customTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    secondaryContainer: 'transparent',
+  },
+};
+
 function MainTabs() {
   return (
-    <Tab.Navigator 
+    <PaperProvider theme={customTheme}>
+      <Tab.Navigator 
       initialRouteName="Dashboard" 
-      shifting={true} 
-      barStyle={{ backgroundColor: '#6200ea' }}
+      shifting={true}
+      labeled={false}
+      activeColor="#FFFFFF"
+      inactiveColor="#FFFFFF"
+      barStyle={styles.barStyle}
     >
       <Tab.Screen 
-        name="Dashboard" 
-        component={Dashboard} 
+        name="Dashboard"
+        component={Dashboard}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="view-dashboard" color={color} size={24} />
-          )
+            <Icon name="home-outline" color={color} size={30} />
+          ),
+          tabBarColor: "#FF5733"
         }} 
       />
     </Tab.Navigator>
+    </PaperProvider>
   );
 }
 
