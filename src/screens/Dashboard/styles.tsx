@@ -8,14 +8,16 @@ const styles = StyleSheet.create({
     },
     overlay:{
         flex:1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginHorizontal: 18,
+        justifyContent: "flex-start",
+        alignItems:"center",
+        rowGap: 30
     },
     cardsRow:{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        marginHorizontal: 18,
+        marginVertical: 30,
         columnGap: 25
     },
     text:{

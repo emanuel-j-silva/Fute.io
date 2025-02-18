@@ -1,6 +1,7 @@
 import React from "react";
-import {Text, View, ImageBackground} from "react-native"
+import {View, ImageBackground} from "react-native"
 import InfoCard from "../../components/InfoCard";
+import DashboardHeader from "../../components/DashboardHeader";
 import styles from "./styles";
 
 function Dashboard() {
@@ -11,7 +12,7 @@ function Dashboard() {
         resizeMode="cover"
     >
         <View style={styles.overlay}>
-            <Text style={styles.text}>Fute.io</Text>
+            <DashboardHeader name="Emanuel Silva"/>
             <View style={styles.cardsRow}>
                 <InfoCard 
                 title="Último" 

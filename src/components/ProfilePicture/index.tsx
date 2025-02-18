@@ -8,7 +8,7 @@ interface ProfilePictureProps{
     size?: number;
 }
 
-function ProfilePicture({photoUrl, size=26}: ProfilePictureProps){
+function ProfilePicture({photoUrl, size=30}: ProfilePictureProps){
     if(photoUrl){
             <Image 
                 source={{uri: photoUrl}}

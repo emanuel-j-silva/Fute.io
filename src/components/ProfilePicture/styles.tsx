@@ -5,8 +5,11 @@ const styles = StyleSheet.create({
         resizeMode: "cover"
     },
     iconContainer:{
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        borderRadius: 50,
+        padding: 5
     }
 });
 
