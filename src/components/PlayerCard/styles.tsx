@@ -2,17 +2,28 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1,
         flexDirection: "row",
-        borderRadius: 10
+        columnGap: "15",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        borderRadius: 10,
+        width: "100%",
+        paddingVertical: 15,
+        paddingHorizontal: 20
     },
     name:{
+        flex: 3,
         fontFamily: "FasterOne",
-        color: "#FFFFFF"
+        fontSize: 22,
+        alignSelf: "center",
+        justifyContent: "flex-start",
+        textAlign: "justify"
     },
     overall:{
+        flex: 1,
         fontSize: 40,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        alignSelf: "center",
     }
 
 });
