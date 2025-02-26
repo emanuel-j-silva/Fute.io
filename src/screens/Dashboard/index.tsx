@@ -2,7 +2,7 @@ import React from "react";
 import {View, ImageBackground} from "react-native"
 import InfoCard from "./components/InfoCard";
 import DashboardHeader from "./components/DashboardHeader";
-import PlayerCard from "../../components/PlayerCard";
+import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
 
 function Dashboard() {
@@ -27,7 +27,7 @@ function Dashboard() {
                 content={{text: "15", size: 50}}
                 />
             </View>
-            <PlayerCard name="Estevão" overall={90}/>
+            <ListPlayerCard title="Top Jogadores"></ListPlayerCard>
         </View>
     </ImageBackground>
     );
