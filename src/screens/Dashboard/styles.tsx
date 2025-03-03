@@ -10,13 +10,18 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: "flex-start",
         alignItems:"center",
-        rowGap: 30
+        rowGap: 30,
+    },
+    content:{
+        flex: 1,
+        width: "100%",
+        paddingHorizontal: 18,
+        paddingBottom: 15
     },
     cardsRow:{
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        marginHorizontal: 18,
         marginVertical: 30,
         columnGap: 25
     },

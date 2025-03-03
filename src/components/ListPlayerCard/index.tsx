@@ -5,13 +5,14 @@ import styles from "./styles";
 
 interface ListPlayerCardProps{
     title: string;
+    colorTitle?: string;
 }
 
-function ListPlayerCard({title}: ListPlayerCardProps) {
+function ListPlayerCard({title, colorTitle}: ListPlayerCardProps) {
     return(
     <View style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
-        <ScrollView>
+        <Text style={[styles.title, {color: colorTitle}]}>{title}</Text>
+        <ScrollView style={styles.scroll}>
             <PlayerCard name="Estevão" overall={90} />
             <PlayerCard name="Raphael Veiga" overall={85} />
             <PlayerCard name="Gabi" overall={60} />

@@ -14,20 +14,22 @@ function Dashboard() {
     >
         <View style={styles.overlay}>
             <DashboardHeader name="Emanuel Silva"/>
-            <View style={styles.cardsRow}>
-                <InfoCard 
-                title="Último" 
-                subtitle="Sorteio" 
-                content={{text: "15/02/25", size: 22}}
-                footer="Grupo Star"
-                />
-                <InfoCard 
-                title="Total de" 
-                subtitle="Sorteios" 
-                content={{text: "15", size: 50}}
-                />
+            <View style={styles.content}>
+                <View style={styles.cardsRow}>
+                    <InfoCard 
+                    title="Último" 
+                    subtitle="Sorteio" 
+                    content={{text: "15/02/25", size: 22}}
+                    footer="Grupo Star"
+                    />
+                    <InfoCard 
+                    title="Total de" 
+                    subtitle="Sorteios" 
+                    content={{text: "15", size: 50}}
+                    />
+                </View>
+                <ListPlayerCard title="Top Jogadores"/>
             </View>
-            <ListPlayerCard title="Top Jogadores"></ListPlayerCard>
         </View>
     </ImageBackground>
     );
