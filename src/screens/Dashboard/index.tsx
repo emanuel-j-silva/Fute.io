@@ -4,6 +4,7 @@ import InfoCard from "./components/InfoCard";
 import DashboardHeader from "./components/DashboardHeader";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
+import FabButton from "../../components/FabButton";
 
 function Dashboard() {
     return(
@@ -30,6 +31,7 @@ function Dashboard() {
                 </View>
                 <ListPlayerCard title="Top Jogadores"/>
             </View>
+            <FabButton icon="shuffle" />
         </View>
     </ImageBackground>
     );

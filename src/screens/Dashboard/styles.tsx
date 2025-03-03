@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         paddingHorizontal: 18,
-        paddingBottom: 15
+        paddingBottom: 35
     },
     cardsRow:{
         flexDirection: "row",
