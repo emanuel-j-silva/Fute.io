@@ -1,6 +1,7 @@
 import React from "react";
 import {Text, View, ScrollView} from "react-native"
 import PlayerCard from "../../components/PlayerCard";
+import { mockPlayers } from "../../data/mockPlayers";
 import styles from "./styles";
 
 interface ListPlayerCardProps{
@@ -13,9 +14,9 @@ function ListPlayerCard({title, colorTitle}: ListPlayerCardProps) {
     <View style={styles.container}>
         <Text style={[styles.title, {color: colorTitle}]}>{title}</Text>
         <ScrollView style={styles.scroll}>
-            <PlayerCard name="Estevão" overall={90} />
-            <PlayerCard name="Raphael Veiga" overall={85} />
-            <PlayerCard name="Gabi" overall={60} />
+            {mockPlayers.map((player,index) => (
+                <PlayerCard key={index} name={player.name} overall={player.overall} />
+            ))}
         </ScrollView>
     </View> 
     );
