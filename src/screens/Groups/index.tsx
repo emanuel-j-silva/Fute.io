@@ -6,7 +6,7 @@ function Groups() {
     return(
     <ImageBackground
         style = {styles.background}
-        source={require("../../../assets/images/login-wallpaper.png")}
+        source={require("../../../assets/images/groups-wallpaper.png")}
         resizeMode="cover"
     >
         <View style={styles.overlay}>
