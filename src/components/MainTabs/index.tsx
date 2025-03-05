@@ -2,13 +2,14 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import Dashboard from '../../screens/Dashboard';
+import Groups from '../../screens/Groups';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
 
 type TabParamList = {
   Dashboard: undefined;
-  Grupos: undefined;
-  Jogadores: undefined;
+  Groups: undefined;
+  Players: undefined;
 };
 
 const Tab = createMaterialBottomTabNavigator<TabParamList>();
@@ -37,11 +38,23 @@ function MainTabs() {
         component={Dashboard}
         options={{
           tabBarIcon: ({ color }) => (
-            <Icon name="home-outline" color={color} size={30} />
+            <Icon name="home" color={color} size={30} />
           ),
           tabBarColor: "#FF5733"
         }} 
       />
+
+      <Tab.Screen 
+        name="Groups"
+        component={Groups}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Icon name="account-group" color={color} size={30} />
+          ),
+          tabBarColor: "#FF5733"
+        }} 
+      />
+
     </Tab.Navigator>
     </PaperProvider>
   );
