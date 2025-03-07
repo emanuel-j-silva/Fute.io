@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
         rowGap: 25,
         paddingTop: 50,
         paddingBottom: 30,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        alignItems: "center"
     },
     text:{
         color: "white",

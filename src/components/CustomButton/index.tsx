@@ -10,7 +10,8 @@ interface CustomButtonProps{
     textColor?: string;
     fontSize?: number;
     fontFamily?: string;
-
+    paddingHorizontal?:number;
+    paddingVertical?:number;
 }
 
 function CustomButton({title, onPress, 
@@ -18,12 +19,16 @@ function CustomButton({title, onPress,
     pressedBackgroundColor, 
     textColor = "white",
     fontSize = 16,
-    fontFamily = "System"
+    fontFamily = "System",
+    paddingHorizontal = 100,
+    paddingVertical = 22
 }: CustomButtonProps){
     return(
         <Pressable style={({ pressed }) => [
             styles.button,
             {backgroundColor: pressed ? pressedBackgroundColor : backgroundColor},
+            {paddingHorizontal: paddingHorizontal},
+            {paddingVertical: paddingVertical}
           ]}
           onPress={onPress}
         >

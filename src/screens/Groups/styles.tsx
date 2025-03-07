@@ -8,13 +8,26 @@ const styles = StyleSheet.create({
   },
   overlay:{
     flex:1,
+    paddingTop: 40,
+    maxWidth: "100%",
+    paddingHorizontal: 20
   },
-  text:{
+  title:{
     textAlign: "center",
     fontSize: 52,
     color: "white",
     fontFamily: "FasterOne",
-  }
+    marginBottom: 25
+  },
+  buttonsRow:{
+    flex: 1,
+    flexDirection: "row",
+    alignSelf: "center",
+    columnGap: 10,
+  },
+  scroll:{
+
+  },
 });
 
 export default styles;
