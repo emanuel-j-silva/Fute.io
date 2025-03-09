@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: "#050517E6",
     borderRadius: 25,
+    paddingBottom: 10
   },
   trashIcon:{
     alignSelf: "flex-end",
@@ -27,11 +28,9 @@ const styles = StyleSheet.create({
   subtitle:{
     textAlign: "auto",
     color: "#FFFFFF",
-    fontSize: 16
+    fontSize: 16,
+    marginLeft: 10
   },
-  subIcon:{
-    //flex: 1,
-  }
 });
 
 export default styles;

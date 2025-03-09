@@ -15,11 +15,11 @@ function GroupCard({name, numPlayers, location}: GroupCardProps) {
             <Icon name="trash-can-outline" style={styles.trashIcon} size={20} color="red"/>
             <Text style={styles.title}>{name}</Text>
             <View style={styles.rowInfo}>
-                <Icon name="account-outline" size={22} color="#FFFFFF" style={styles.subIcon}/>
+                <Icon name="account-outline" size={22} color="#FFFFFF"/>
                 <Text style={styles.subtitle}>{`Número de jogadores: ${numPlayers}`}</Text>                
             </View>
             <View style={styles.rowInfo}>
-                <Icon name="map-marker-outline" size={22} color="#FFFFFF" style={styles.subIcon}/>
+                <Icon name="map-marker-outline" size={22} color="#FFFFFF"/>
                 <Text style={styles.subtitle}>{location}</Text>
             </View>
         </View>
