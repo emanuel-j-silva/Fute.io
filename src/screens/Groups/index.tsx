@@ -2,6 +2,7 @@ import React from "react";
 import {Text, View, ImageBackground, ScrollView} from "react-native"
 import styles from "./styles";
 import CustomButton from "../../components/CustomButton";
+import GroupCard from "./components/GroupCard";
 
 function Groups() {
     return(
@@ -25,7 +26,7 @@ function Groups() {
                 </View>
             </View>
             <ScrollView style={styles.scroll}>
-
+                <GroupCard name="Grupo Star" numPlayers={15} location="Avenida A, 50" />
             </ScrollView>
         </View>
     </ImageBackground>
