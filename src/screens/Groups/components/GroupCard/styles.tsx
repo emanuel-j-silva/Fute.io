@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: "#050517E6",
     borderRadius: 25,
-    paddingBottom: 10
+    paddingBottom: 10,
+    marginBottom: 10
   },
   trashIcon:{
     alignSelf: "flex-end",

@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     flex:1,
     paddingTop: 40,
     maxWidth: "100%",
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   title:{
     textAlign: "center",
@@ -20,13 +20,10 @@ const styles = StyleSheet.create({
     marginBottom: 25
   },
   buttonsRow:{
-    flex: 1,
     flexDirection: "row",
     alignSelf: "center",
     columnGap: 10,
-  },
-  scroll:{
-
+    marginBottom: 35
   },
 });
 

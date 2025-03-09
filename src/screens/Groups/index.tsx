@@ -1,8 +1,9 @@
 import React from "react";
 import {Text, View, ImageBackground, ScrollView} from "react-native"
-import styles from "./styles";
 import CustomButton from "../../components/CustomButton";
 import GroupCard from "./components/GroupCard";
+import { mockGroups } from "../../data/mockGroups";
+import styles from "./styles";
 
 function Groups() {
     return(
@@ -25,8 +26,11 @@ function Groups() {
                         paddingHorizontal={30} paddingVertical={30}/>
                 </View>
             </View>
-            <ScrollView style={styles.scroll}>
-                <GroupCard name="Grupo Star" numPlayers={15} location="Avenida A, 50" />
+            <ScrollView>
+                {mockGroups.map((group,index) =>(
+                    <GroupCard key={index} name={group.name} numPlayers={group.numberOfPlayers} 
+                        location={group.location} />
+                ))}
             </ScrollView>
         </View>
     </ImageBackground>
