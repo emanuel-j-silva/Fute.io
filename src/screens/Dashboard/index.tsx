@@ -1,12 +1,22 @@
 import React from "react";
 import {View, ImageBackground} from "react-native"
+import { StackNavigationProp } from '@react-navigation/stack';
 import InfoCard from "./components/InfoCard";
 import DashboardHeader from "./components/DashboardHeader";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
 import FabButton from "../../components/FabButton";
 
-function Dashboard() {
+type StackDashList = {
+    Dashboard: undefined;
+    Draw: undefined;
+  };
+  
+  type DashProps = {
+    navigation: StackNavigationProp<StackDashList, "Dashboard">;
+  };
+
+function Dashboard({navigation}: DashProps) {
     return(
     <ImageBackground
         style = {styles.background}
@@ -31,7 +41,7 @@ function Dashboard() {
                 </View>
                 <ListPlayerCard title="Top Jogadores"/>
             </View>
-            <FabButton icon="shuffle" />
+            <FabButton icon="shuffle" onPress={()=> navigation.replace("Draw")}/>
         </View>
     </ImageBackground>
     );
