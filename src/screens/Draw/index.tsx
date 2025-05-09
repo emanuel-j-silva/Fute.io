@@ -1,5 +1,6 @@
 import React from "react";
 import {View, ImageBackground} from "react-native"
+import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
 
 function Draw() {
@@ -10,8 +11,8 @@ function Draw() {
         resizeMode="cover"
     >
         <View style={styles.overlay}>
-            <View >
-                
+            <View style={styles.content}>
+                <ListPlayerCard title="Jogadores"/>
             </View>
         </View>
     </ImageBackground>

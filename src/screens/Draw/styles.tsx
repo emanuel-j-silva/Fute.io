@@ -7,8 +7,16 @@ const styles = StyleSheet.create({
         backgroundColor: "black"
     },
     overlay:{
-        flex:1,
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center"
     },
+    content:{
+        flex: 1,
+        width: "100%",
+        paddingHorizontal: 20,
+        paddingVertical: 20
+    }
 });
 
 export default styles;
