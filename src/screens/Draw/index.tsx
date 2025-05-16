@@ -1,5 +1,6 @@
 import React from "react";
-import {View, ImageBackground} from "react-native"
+import {View, ImageBackground, BackHandler, Alert} from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import GroupItem from "./components/GroupItem";
 import CustomButton from "../../components/CustomButton";
@@ -7,6 +8,29 @@ import Input from "../../components/Input";
 import styles from "./styles";
 
 function Draw() {
+    const navigation = useNavigation();
+
+    useFocusEffect(
+  React.useCallback(() => {
+    const onBackPress = () => {
+      Alert.alert('Sair', 'Você deseja voltar para o Dashboard?', [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Sim',
+          onPress: () => {
+            navigation.navigate('MainTabs');
+          },
+        },
+      ]);
+      return true;
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  }, [])
+);
+
     return(
     <ImageBackground
         style = {styles.background}
