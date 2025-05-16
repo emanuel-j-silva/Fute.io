@@ -8,15 +8,12 @@ const styles = StyleSheet.create({
     },
     overlay:{
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center"
-    },
-    content:{
-        flex: 1,
         width: "100%",
         paddingHorizontal: 20,
-        paddingVertical: 20
-    }
+        paddingVertical: 30,
+        rowGap: 10
+    },
+    
 });
 
 export default styles;

@@ -1,8 +1,21 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    content:{
-        flex: 1,
+    container:{
+        flexDirection: "row",
+        backgroundColor: "#050517",
+        borderRadius: 20,
+        paddingVertical: 20,
+        paddingHorizontal: 5,
+    },
+    placeholder:{
+        
+    },
+    button:{
+
+    },
+    items:{
+        color: "#D9D9D9"
     }
 });
 
