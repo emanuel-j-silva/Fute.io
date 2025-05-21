@@ -1,14 +1,21 @@
 import React from "react";
 import {View, ImageBackground, BackHandler, Alert} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import type { StackNavigationProp } from "@react-navigation/stack";
+
 import ListPlayerCard from "../../components/ListPlayerCard";
 import GroupItem from "./components/GroupItem";
 import CustomButton from "../../components/CustomButton";
 import Input from "../../components/Input";
 import styles from "./styles";
 
+import { RootStackParamList } from "../../../types/navigation";
+
+type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
+
+
 function Draw() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<DrawNavigationProp>();
 
     useFocusEffect(
   React.useCallback(() => {
