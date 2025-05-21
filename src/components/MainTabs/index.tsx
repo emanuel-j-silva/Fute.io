@@ -2,6 +2,7 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import Dashboard from '../../screens/Dashboard';
+import Players from '../../screens/Players';
 import Groups from '../../screens/Groups';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
@@ -39,6 +40,17 @@ function MainTabs() {
         options={{
           tabBarIcon: ({ color }) => (
             <Icon name="home" color={color} size={30} />
+          ),
+          tabBarColor: "#FF5733"
+        }} 
+      />
+
+      <Tab.Screen 
+        name="Players"
+        component={Players}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Icon name="account" color={color} size={30} />
           ),
           tabBarColor: "#FF5733"
         }} 
