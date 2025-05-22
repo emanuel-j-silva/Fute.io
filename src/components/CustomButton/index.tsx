@@ -1,10 +1,11 @@
 import React from "react";
-import { GestureResponderEvent, Pressable, Text } from 'react-native';
+import { Pressable, Text } from 'react-native';
 import styles from "./styles";
 
 interface CustomButtonProps{
     title: string;
-    onPress: (event: GestureResponderEvent) => void;
+    onPress: () => void;
+    disabled?: boolean;
     backgroundColor?: string;
     pressedBackgroundColor?: string;
     textColor?: string;
@@ -14,7 +15,8 @@ interface CustomButtonProps{
     paddingVertical?:number;
 }
 
-function CustomButton({title, onPress, 
+function CustomButton({title, onPress,
+    disabled = false, 
     backgroundColor = "#050517", 
     pressedBackgroundColor, 
     textColor = "white",
@@ -24,15 +26,25 @@ function CustomButton({title, onPress,
     paddingVertical = 22
 }: CustomButtonProps){
     return(
-        <Pressable style={({ pressed }) => [
-            styles.button,
-            {backgroundColor: pressed ? pressedBackgroundColor : backgroundColor},
-            {paddingHorizontal: paddingHorizontal},
-            {paddingVertical: paddingVertical}
-          ]}
-          onPress={onPress}
-        >
-            <Text style={[styles.text, {color: textColor, fontSize, fontFamily}]}>
+        <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      style={({ pressed }) => {
+        const base = [
+          styles.button,
+          { paddingHorizontal, paddingVertical, backgroundColor: pressed
+              ? pressedBackgroundColor ?? backgroundColor
+              : backgroundColor, },
+        ];
+        if (disabled) {
+          return [...base, { opacity: 0.5 }];
+        }
+        return [
+          ...base
+        ];
+      }}
+    >
+            <Text style={[styles.text, { color: textColor, fontSize, fontFamily }]}>
                 {title}
             </Text>
         </Pressable>

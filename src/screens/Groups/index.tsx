@@ -45,6 +45,7 @@ function Groups() {
                 </View>
                 <View style={{flex: 1}}>
                     <CustomButton title="Remover Grupo" onPress={handleRemove} 
+                    disabled={!selectedGroup}
                     fontSize={12} backgroundColor="#03045E" pressedBackgroundColor="#ED2929"
                     paddingHorizontal={30} paddingVertical={30}/>
                 </View>
