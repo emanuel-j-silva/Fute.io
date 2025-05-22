@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/Login';
 import MainTabs from './src/components/MainTabs';
 import Draw from './src/screens/Draw';
+import DrawResult from './src/screens/DrawResult';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -14,6 +15,7 @@ type StackParamList = {
   Login: undefined;
   MainTabs: undefined;
   Draw: undefined;
+  DrawResult: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -43,6 +45,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="Draw" component={Draw} />        
+        <Stack.Screen name="DrawResult" component={DrawResult} />        
       </Stack.Navigator>
     </NavigationContainer>
   );

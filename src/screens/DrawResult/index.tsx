@@ -4,28 +4,27 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 
 import ListPlayerCard from "../../components/ListPlayerCard";
-import GroupItem from "./components/GroupItem";
 import CustomButton from "../../components/CustomButton";
 import Input from "../../components/Input";
 import styles from "./styles";
 
 import { RootStackParamList } from "../../../types/navigation";
 
-type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
+type DrawResultNavigationProp = StackNavigationProp<RootStackParamList, "DrawResult">;
 
 
-function Draw() {
-    const navigation = useNavigation<DrawNavigationProp>();
+function DrawResult() {
+    const navigation = useNavigation<DrawResultNavigationProp>();
 
     useFocusEffect(
   React.useCallback(() => {
     const onBackPress = () => {
-      Alert.alert('Sair', 'Você deseja voltar para o Dashboard?', [
+      Alert.alert('Sair', 'Você deseja voltar para a Tela de Sorteios?', [
         { text: 'Cancelar', style: 'cancel' },
         {
           text: 'Sim',
           onPress: () => {
-            navigation.navigate('MainTabs');
+            navigation.navigate('Draw');
           },
         },
       ]);
@@ -41,21 +40,17 @@ function Draw() {
     return(
     <ImageBackground
         style = {styles.background}
-        source={require("../../../assets/images/draw-wallpaper.png")}
+        source={require("../../../assets/images/draw-result-wallpaper.png")}
         resizeMode="cover"
     >
         <View style={styles.overlay}>            
-            <GroupItem />
-            <ListPlayerCard title="Jogadores"/>
-            <View>
-                <Input placeholder="Número de times" type="numeric"/>
-            </View>
-            <CustomButton title="Sortear" onPress={()=>{navigation.navigate("DrawResult")}}
-                backgroundColor="#D9D9D9" textColor="#050517"
-                pressedBackgroundColor="#FFFFFF"/>
+           
+            <CustomButton title="Exportar" onPress={()=>{}}
+                backgroundColor="#050517" textColor="#D9D9D9"
+                pressedBackgroundColor="#0077B6"/>
         </View>
     </ImageBackground>
     );
 }
 
-export default Draw;
+export default DrawResult;
