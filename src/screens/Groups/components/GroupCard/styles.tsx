@@ -5,13 +5,9 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: "#050517E6",
     borderRadius: 25,
+    paddingTop: 15,
     paddingBottom: 10,
     marginBottom: 10
-  },
-  trashIcon:{
-    alignSelf: "flex-end",
-    paddingHorizontal: 20,
-    paddingTop: 15,
   },
   title:{
     textAlign: "center",
