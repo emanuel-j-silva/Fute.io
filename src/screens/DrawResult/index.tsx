@@ -1,12 +1,14 @@
 import React from "react";
-import {Text, View, ImageBackground, BackHandler, Alert} from "react-native";
+import {Text, View, ImageBackground, ScrollView, BackHandler, Alert} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 
 import CustomButton from "../../components/CustomButton";
 import styles from "./styles";
 
+import { mockTeams } from "../../data/mockTeams";
 import { RootStackParamList } from "../../../types/navigation";
+import TeamCard from "./components/TeamCard";
 
 type DrawResultNavigationProp = StackNavigationProp<RootStackParamList, "DrawResult">;
 
@@ -43,6 +45,11 @@ function DrawResult() {
     >
         <View style={styles.overlay}>            
             <Text style={styles.title}>Resultado</Text>
+            <ScrollView>
+                {mockTeams.map((team, index)=>(
+                    <TeamCard key={index} name={team.name} players={team.players}/>
+                ))}
+            </ScrollView>
             <CustomButton title="Exportar" onPress={()=>{}}
                 backgroundColor="#050517" textColor="#D9D9D9"
                 pressedBackgroundColor="#0077B6"/>
