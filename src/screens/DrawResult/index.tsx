@@ -1,11 +1,9 @@
 import React from "react";
-import {View, ImageBackground, BackHandler, Alert} from "react-native";
+import {Text, View, ImageBackground, BackHandler, Alert} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 
-import ListPlayerCard from "../../components/ListPlayerCard";
 import CustomButton from "../../components/CustomButton";
-import Input from "../../components/Input";
 import styles from "./styles";
 
 import { RootStackParamList } from "../../../types/navigation";
@@ -17,25 +15,25 @@ function DrawResult() {
     const navigation = useNavigation<DrawResultNavigationProp>();
 
     useFocusEffect(
-  React.useCallback(() => {
-    const onBackPress = () => {
-      Alert.alert('Sair', 'Você deseja voltar para a Tela de Sorteios?', [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Sim',
-          onPress: () => {
-            navigation.navigate('Draw');
-          },
-        },
-      ]);
-      return true;
-    };
+        React.useCallback(() => {
+            const onBackPress = () => {
+            Alert.alert('Sair', 'Você deseja voltar para a Tela de Sorteios?', [
+                { text: 'Cancelar', style: 'cancel' },
+                {
+                text: 'Sim',
+                onPress: () => {
+                    navigation.navigate('Draw');
+                },
+                },
+            ]);
+            return true;
+            };
 
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  }, [])
-);
+            return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
 
     return(
     <ImageBackground
@@ -44,7 +42,7 @@ function DrawResult() {
         resizeMode="cover"
     >
         <View style={styles.overlay}>            
-           
+            <Text style={styles.title}>Resultado</Text>
             <CustomButton title="Exportar" onPress={()=>{}}
                 backgroundColor="#050517" textColor="#D9D9D9"
                 pressedBackgroundColor="#0077B6"/>

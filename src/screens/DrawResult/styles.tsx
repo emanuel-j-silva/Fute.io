@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
         paddingVertical: 30,
         rowGap: 10
     },
+    title:{
+    textAlign: "center",
+    fontSize: 52,
+    color: "white",
+    fontFamily: "FasterOne",
+    marginBottom: 25
+  },
     
 });
 
