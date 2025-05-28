@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useCallback} from "react";
 import {View, ImageBackground, BackHandler, Alert} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
@@ -15,28 +15,41 @@ type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
 
 
 function Draw() {
-    const navigation = useNavigation<DrawNavigationProp>();
+  const navigation = useNavigation<DrawNavigationProp>();
+  const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+  const [numTeams, setNumTeams] = useState<string>("");
 
-    useFocusEffect(
-  React.useCallback(() => {
-    const onBackPress = () => {
-      Alert.alert('Sair', 'Você deseja voltar para o Dashboard?', [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Sim',
-          onPress: () => {
-            navigation.navigate('MainTabs');
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        Alert.alert("Sair", "Você deseja voltar para o Dashboard?", [
+          { text: "Cancelar", style: "cancel" },
+          {
+            text: "Sim",
+            onPress: () => navigation.navigate("MainTabs"),
           },
-        },
-      ]);
-      return true;
-    };
+        ]);
+        return true;
+      };
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [])
+  );
 
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+  const togglePlayer = (name: string) => {
+    setSelectedPlayers(prev =>
+      prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name]
+    );
+  };
 
-    return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  }, [])
-);
+  const canDraw =
+    selectedPlayers.length > 0 && Number(numTeams) > 0 && selectedPlayers.length > Number(numTeams);
+
+  const handleDraw = () => {
+    navigation.navigate("DrawResult");
+  };
+
 
     return(
     <ImageBackground
@@ -46,12 +59,15 @@ function Draw() {
     >
         <View style={styles.overlay}>            
             <GroupItem />
-            <ListPlayerCard title="Jogadores"/>
+            <ListPlayerCard title="Jogadores" pressable={true} selectedNames={selectedPlayers}
+            onLongPress={togglePlayer}/>
             <View>
-                <Input placeholder="Número de times" type="numeric"/>
+                <Input placeholder="Número de times" type="numeric" 
+                  value={numTeams} onChangeText={setNumTeams}/>
             </View>
-            <CustomButton title="Sortear" onPress={()=>{navigation.navigate("DrawResult")}}
-                backgroundColor="#D9D9D9" textColor="#050517"
+            <CustomButton title="Sortear" onPress={handleDraw}
+                backgroundColor="#D9D9D9"  disabled={!canDraw}
+                textColor={canDraw ? "#050517" : "#FFF"}
                 pressedBackgroundColor="#FFFFFF"/>
         </View>
     </ImageBackground>
