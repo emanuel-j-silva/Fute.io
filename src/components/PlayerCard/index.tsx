@@ -36,7 +36,7 @@ function PlayerCard({ name, overall, photoUrl, photoSize,
         };
 
         const content = (
-            <Animated.View style={[styles.container, { backgroundColor: backColor }, animatedStyle]}>
+            <Animated.View style={[styles.container, { backgroundColor: selected ? "#1B263B" : backColor }, animatedStyle]}>
                 <ProfilePicture photoUrl={photoUrl} size={photoSize} />
                 <Text style={[styles.name, { color: nameColor }]}>{name}</Text>
                 <Text style={[styles.overall, { color: colorStyle }]}>{overall}</Text>
