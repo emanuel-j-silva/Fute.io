@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Text, View, ImageBackground} from "react-native";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import CustomButton from "../../components/CustomButton";
+import AddPlayersModal from "./components/AddPlayersModal";
 
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -16,6 +17,7 @@ function GroupDetails() {
     const route = useRoute<GroupDetailsRouteProp>();
     const { title } = route.params;
 
+    const [modalVisible, setModalVisible] = useState(false);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
     
     const handlePlayerLongPress = (name: string) => {
@@ -42,7 +44,8 @@ function GroupDetails() {
             <View style={styles.content}>
                 <View style={styles.buttonsRow}>
                     <View style={{flex: 1}}>
-                        <CustomButton title="Adicionar Jogadores" onPress={()=> {}}
+                        <CustomButton title="Adicionar Jogadores"
+                            onPress={()=> setModalVisible(true)}
                             fontSize={14} paddingHorizontal={20} paddingVertical={30} 
                             backgroundColor="#03045E" pressedBackgroundColor="#0077B6"/>
                     </View>
@@ -59,6 +62,7 @@ function GroupDetails() {
                     fontSize={16} paddingHorizontal={100} paddingVertical={25} 
                     backgroundColor="#03045E" pressedBackgroundColor="#0077B6" />
             </View>
+            <AddPlayersModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
         </View>
     </ImageBackground>
     );
