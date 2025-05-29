@@ -7,13 +7,15 @@ interface GroupCardProps{
     name: string;
     numPlayers: number;
     location: string;
+    backgroundColor?: string;
     selected: boolean;
     onPress: ()=> void;
     onLongPress: ()=> void;
 
 }
 
-function GroupCard({name, numPlayers, location, selected, onPress, onLongPress}: GroupCardProps) {
+function GroupCard({name, numPlayers, location, selected, 
+    backgroundColor = "#050517E6", onPress, onLongPress}: GroupCardProps) {
     const scale = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {
@@ -32,7 +34,8 @@ function GroupCard({name, numPlayers, location, selected, onPress, onLongPress}:
         onPress={onPress}
         onLongPress={onLongPress}
         >
-            <Animated.View style={[styles.container, animatedStyle]}>
+            <Animated.View style={[styles.container, animatedStyle, 
+                {backgroundColor: selected ? "#1B263B" : backgroundColor}]}>
                 <Text style={styles.title}>{name}</Text>
                 <View style={styles.rowInfo}>
                     <Icon name="account-outline" size={22} color="#FFFFFF"/>
