@@ -58,7 +58,7 @@ function GroupDetails() {
                 </View>
                 <ListPlayerCard title="Jogadores" pressable={true} selectedName={selectedPlayer}
                     onLongPress={handlePlayerLongPress} />
-                <CustomButton title="Ir para Sorteio" onPress={()=>{}}
+                <CustomButton title="Ir para Sorteio" onPress={()=>navigation.navigate("Draw")}
                     fontSize={16} paddingHorizontal={100} paddingVertical={25} 
                     backgroundColor="#03045E" pressedBackgroundColor="#0077B6" />
             </View>
