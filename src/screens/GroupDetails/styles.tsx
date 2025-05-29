@@ -8,17 +8,31 @@ const styles = StyleSheet.create({
   },
   overlay:{
     flex:1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 40,
-    paddingVertical: 40
   },
-  text:{
+  header:{
+    backgroundColor: "#050517A0",
+    paddingTop: 60,
+    borderRadius: 20,
+    alignItems: "center"
+  },
+  content:{
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    rowGap: 20
+  },
+  title:{
     textAlign: "center",
-    fontSize: 52,
+    fontSize: 42,
     color: "white",
     fontFamily: "FasterOne",
-    marginBottom: 100
+    marginBottom: 50
+  },
+  buttonsRow:{
+    flexDirection: "row",
+    alignSelf: "center",
+    columnGap: 10,
+    marginBottom: 35
   }
 });
 
