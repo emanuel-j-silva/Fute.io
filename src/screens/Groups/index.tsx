@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Text, View, ImageBackground, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import type { StackNavigationProp } from "@react-navigation/stack";
 
 import CustomButton from "../../components/CustomButton";
 import GroupCard from "./components/GroupCard";
@@ -8,14 +9,17 @@ import NewGroupModal from "./components/NewGroupModal";
 
 import { mockGroups } from "../../data/mockGroups";
 import styles from "./styles";
+import { RootStackParamList } from "../../../types/navigation";
+
+type GroupsNavigationProp = StackNavigationProp<RootStackParamList, "Groups">
 
 function Groups() {
-    const navigation = useNavigation();
+    const navigation = useNavigation<GroupsNavigationProp>();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
 
     const handleCardPress = (name: string) => {
-    navigation.navigate("GroupDetails" as never, { title: name } as never);
+    navigation.navigate("GroupDetails", { title: name });
     };
 
   const handleCardLongPress = (name: string) => {

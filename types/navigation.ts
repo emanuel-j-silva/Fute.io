@@ -3,4 +3,6 @@ export type RootStackParamList = {
   MainTabs: undefined;
   Draw: undefined;
   DrawResult: undefined;
+  Groups: undefined;
+  GroupDetails: {title: string};
 };
