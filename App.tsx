@@ -11,6 +11,8 @@ import DrawResult from './src/screens/DrawResult';
 import Groups from './src/screens/Groups';
 import GroupDetails from './src/screens/GroupDetails';
 
+import { AuthProvider } from './src/contexts/AuthContext';
+
 SplashScreen.preventAutoHideAsync();
 
 type StackParamList = {
@@ -44,15 +46,17 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="MainTabs" component={MainTabs} />
-        <Stack.Screen name="Draw" component={Draw} />        
-        <Stack.Screen name="DrawResult" component={DrawResult} />        
-        <Stack.Screen name="Groups" component={Groups} />
-        <Stack.Screen name="GroupDetails" component={GroupDetails} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen name="Draw" component={Draw} />        
+          <Stack.Screen name="DrawResult" component={DrawResult} />        
+          <Stack.Screen name="Groups" component={Groups} />
+          <Stack.Screen name="GroupDetails" component={GroupDetails} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
