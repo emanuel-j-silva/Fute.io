@@ -1,9 +1,13 @@
-import React from "react";
-import {Text, View, Modal, ScrollView, Pressable} from "react-native"
+import React, {useState} from "react";
+import {Text, View, Modal, ScrollView, Pressable, Alert} from "react-native"
 import Icon  from "react-native-vector-icons/MaterialCommunityIcons";
-import styles from "./styles";
 import Input from "../../../../components/Input";
 import CustomButton from "../../../../components/CustomButton";
+
+import { registerAccount } from "../../../../services/api/auth";
+
+import styles from "./styles";
+
 
 interface NewUserModalProps{
     visible: boolean;
@@ -11,6 +15,26 @@ interface NewUserModalProps{
 }
 
 function NewUserModal({visible, onClose}: NewUserModalProps) {
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const HandleRegister = async () => {
+        const response = await registerAccount({
+            name,
+            username,
+            email,
+            password,
+        });
+
+        Alert.alert(
+            response.isError ? "Erro no Cadastro" : "Sucesso",
+            response.message,
+            [{ text: "OK", onPress: () => { if (!response.isError) onClose(); } }]
+        );
+    }
+
     return(
         <Modal visible={visible} animationType="fade"
                 onRequestClose={onClose} transparent={true}>
@@ -22,16 +46,20 @@ function NewUserModal({visible, onClose}: NewUserModalProps) {
                 <Text style={styles.subtitle}>Criar Conta</Text>
                 <ScrollView style={styles.scroll}>
                     <View style={styles.divider}/>
-                    <Input icon="card-account-details-outline" placeholder="Nome" defaultColor="#023e8a"/> 
+                    <Input icon="card-account-details-outline" placeholder="Nome" defaultColor="#023e8a"
+                        value={name} onChangeText={setName} /> 
                     <View style={styles.divider}/>
-                    <Input icon="account-circle" placeholder="Username" defaultColor="#023e8a"/>            
+                    <Input icon="account-circle" placeholder="Username" defaultColor="#023e8a"
+                        value={username} onChangeText={setUsername} />            
                     <View style={styles.divider}/>
-                    <Input icon="email" placeholder="Email" defaultColor="#023e8a" type="email"/>            
+                    <Input icon="email" placeholder="Email" defaultColor="#023e8a" type="email"
+                        value={email} onChangeText={setEmail} />            
                     <View style={styles.divider}/>
-                    <Input icon="lock" placeholder="Senha" defaultColor="#023e8a" type="password"/>
+                    <Input icon="lock" placeholder="Senha" defaultColor="#023e8a" type="password"
+                        value={password} onChangeText={setPassword} />
                 </ScrollView>
                 <View style={styles.buttonContainer}>
-                    <CustomButton title="Cadastrar" onPress={()=>{}} 
+                    <CustomButton title="Cadastrar" onPress={HandleRegister} 
                         pressedBackgroundColor="#48cae490"/>
                 </View>
             </View>
