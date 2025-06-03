@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ListPlayerCard from "../../../../components/ListPlayerCard";
 import CustomButton from "../../../../components/CustomButton";
 import styles from "./styles";
+import { mockPlayers } from "../../../../data/mockPlayers";
 
 interface AddPlayersProps{
     visible: boolean;
@@ -28,7 +29,8 @@ function AddPlayersModal({visible, onClose}: AddPlayersProps) {
                 </Pressable>
                 <Text style={styles.title}>Fute.io</Text>
                 <Text style={styles.subtitle}>Selecione os jogadores que deseja incluir neste grupo</Text>
-                <ListPlayerCard title="Adicionar Jogadores" pressable={true} 
+                <ListPlayerCard title="Adicionar Jogadores" players={mockPlayers}
+                pressable={true} 
                     onLongPress={togglePlayer} selectedNames={selectedPlayers}/>
                 <View style={styles.buttonContainer}>
                     <CustomButton title="Adicionar ao Grupo" onPress={()=>{}} 

@@ -10,6 +10,7 @@ import Input from "../../components/Input";
 import styles from "./styles";
 
 import { RootStackParamList } from "../../../types/navigation";
+import { mockPlayers } from "../../data/mockPlayers";
 
 type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
 
@@ -59,7 +60,8 @@ function Draw() {
     >
         <View style={styles.overlay}>            
             <GroupItem />
-            <ListPlayerCard title="Jogadores" pressable={true} selectedNames={selectedPlayers}
+            <ListPlayerCard title="Jogadores" players={mockPlayers}
+            pressable={true} selectedNames={selectedPlayers}
             onLongPress={togglePlayer}/>
             <View>
                 <Input placeholder="Número de times" type="numeric" 

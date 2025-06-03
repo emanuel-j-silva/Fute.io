@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Text, View, ImageBackground, ScrollView} from "react-native"
 import CustomButton from "../../components/CustomButton";
 import ListPlayerCard from "../../components/ListPlayerCard";
-
+import { mockPlayers } from "../../data/mockPlayers";
 import styles from "./styles";
 import NewPlayerModal from "./components/NewPlayerModal";
 
@@ -41,7 +41,7 @@ function Players() {
                         paddingHorizontal={30} paddingVertical={30} disabled={!selectedPlayer}/>
                 </View>
             </View>
-            <ListPlayerCard title="Todos os Jogadores" pressable={true} selectedName={selectedPlayer}
+            <ListPlayerCard title="Todos os Jogadores" players={mockPlayers} pressable={true} selectedName={selectedPlayer}
                 onLongPress={handlePlayerLongPress}/>
             <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
         </View>
