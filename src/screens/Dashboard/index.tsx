@@ -1,11 +1,15 @@
-import React from "react";
-import {View, ImageBackground} from "react-native"
+import React, {useState, useContext, useEffect} from "react";
+import {View, Text, ImageBackground, Alert, ActivityIndicator} from "react-native"
 import { StackNavigationProp } from '@react-navigation/stack';
 import InfoCard from "./components/InfoCard";
 import DashboardHeader from "./components/DashboardHeader";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
 import FabButton from "../../components/FabButton";
+
+import { getTopPlayers } from "../../services/api/endpoints/players";
+import { PlayerInfo } from "../../../types/players";
+import { AuthContext } from "../../contexts/AuthContext";
 
 type StackDashList = {
     Dashboard: undefined;
@@ -17,6 +21,40 @@ type StackDashList = {
   };
 
 function Dashboard({navigation}: DashProps) {
+    const [players, setPlayers] = useState<PlayerInfo[]>([]);
+    const [loadingPlayers, setLoadingPlayers] = useState(true);
+    
+
+    const { token, isLoadingAuth } = useContext(AuthContext); 
+    
+    useEffect(() => {
+            async function loadPlayers() {
+                if (token && !isLoadingAuth) {
+                    try {
+                        setLoadingPlayers(true);
+                        const data = await getTopPlayers();
+                        setPlayers(data);
+                    } catch (error) {
+                        Alert.alert("Erro", "Erro ao carregar grupos.");
+                    } finally {
+                        setLoadingPlayers(false);
+                    }
+                } else if (!token && !isLoadingAuth) {
+                    console.warn("DASHBOARD SCREEN: Nenhum token disponível para carregar jogadores.");
+                }
+            }
+            loadPlayers();
+        }, [token, isLoadingAuth]);
+
+        if (isLoadingAuth || loadingPlayers) {
+        return (
+            <View style={styles.loadingView}>
+                <ActivityIndicator size="large" color="#0077B6" />
+                <Text style= {{ marginTop: 10, color: '#fff' }}>Carregando...</Text>
+            </View>
+        );
+    }
+    
     return(
     <ImageBackground
         style = {styles.background}
