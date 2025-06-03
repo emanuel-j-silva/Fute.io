@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import {Text, View, ImageBackground, Alert, ActivityIndicator} from "react-native"
 import CustomButton from "../../components/CustomButton";
 import ListPlayerCard from "../../components/ListPlayerCard";
-import { mockPlayers } from "../../data/mockPlayers";
 import NewPlayerModal from "./components/NewPlayerModal";
 
 import { getAllPlayers } from "../../services/api/endpoints/players";
