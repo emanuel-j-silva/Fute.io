@@ -77,7 +77,7 @@ function Dashboard({navigation}: DashProps) {
                     content={{text: "15", size: 50}}
                     />
                 </View>
-                <ListPlayerCard title="Top Jogadores"/>
+                <ListPlayerCard title="Top Jogadores" players={players}/>
             </View>
             <FabButton icon="shuffle" onPress={()=> navigation.replace("Draw")}/>
         </View>

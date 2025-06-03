@@ -2,10 +2,12 @@ import React from "react";
 import {Text, View, ScrollView} from "react-native"
 import PlayerCard from "../../components/PlayerCard";
 import { mockPlayers } from "../../data/mockPlayers";
+import { PlayerInfo } from "../../../types/players";
 import styles from "./styles";
 
 interface ListPlayerCardProps{
     title: string;
+    players: PlayerInfo[];
     colorTitle?: string;
     pressable?: boolean;
     selectedName?: string | null;
@@ -13,14 +15,14 @@ interface ListPlayerCardProps{
     onLongPress?: (name: string) => void;
 }
 
-function ListPlayerCard({title, colorTitle, pressable=false, 
+function ListPlayerCard({title, players, colorTitle, pressable=false, 
     selectedName=null, selectedNames = [], onLongPress}: ListPlayerCardProps) {
 
     return(
     <View style={styles.container}>
         <Text style={[styles.title, {color: colorTitle}]}>{title}</Text>
         <ScrollView style={styles.scroll}>
-            {mockPlayers.map((player,index) => {
+            {players.map((player,index) => {
                 const isSelected = selectedNames.length > 0
             ? selectedNames.includes(player.name)
             : selectedName === player.name;
