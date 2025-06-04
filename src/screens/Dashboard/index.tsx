@@ -7,9 +7,13 @@ import ListPlayerCard from "../../components/ListPlayerCard";
 import styles from "./styles";
 import FabButton from "../../components/FabButton";
 
+import { AuthContext } from "../../contexts/AuthContext";
+
 import { getTopPlayers } from "../../services/api/endpoints/players";
 import { PlayerInfo } from "../../../types/players";
-import { AuthContext } from "../../contexts/AuthContext";
+
+import { getSummaryInfo } from "../../services/api/endpoints/summary";
+import { SummaryInfo } from "../../../types/summary";
 
 type StackDashList = {
     Dashboard: undefined;
@@ -22,31 +26,36 @@ type StackDashList = {
 
 function Dashboard({navigation}: DashProps) {
     const [players, setPlayers] = useState<PlayerInfo[]>([]);
-    const [loadingPlayers, setLoadingPlayers] = useState(true);
-    
+    const [summaryInfo, setSummaryInfo] = useState<SummaryInfo | undefined>(undefined);
+
+    const [loadingData, setLoadingData] = useState(true);
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
     
     useEffect(() => {
-            async function loadPlayers() {
+            async function loadDashboardData() {
                 if (token && !isLoadingAuth) {
                     try {
-                        setLoadingPlayers(true);
-                        const data = await getTopPlayers();
-                        setPlayers(data);
+                        setLoadingData(true);
+
+                        const playersData = await getTopPlayers();
+                        setPlayers(playersData);
+
+                        const summaryData = await getSummaryInfo();
+                        setSummaryInfo(summaryData);
                     } catch (error) {
-                        Alert.alert("Erro", "Erro ao carregar grupos.");
+                        Alert.alert("Erro", "Erro ao carregar informações do Dashboard.");
                     } finally {
-                        setLoadingPlayers(false);
+                        setLoadingData(false);
                     }
                 } else if (!token && !isLoadingAuth) {
                     console.warn("DASHBOARD SCREEN: Nenhum token disponível para carregar jogadores.");
                 }
             }
-            loadPlayers();
+            loadDashboardData();
         }, [token, isLoadingAuth]);
 
-        if (isLoadingAuth || loadingPlayers) {
+        if (isLoadingAuth || loadingData) {
         return (
             <View style={styles.loadingView}>
                 <ActivityIndicator size="large" color="#0077B6" />
@@ -54,7 +63,17 @@ function Dashboard({navigation}: DashProps) {
             </View>
         );
     }
-    
+
+    if (!summaryInfo) {
+        return (
+            <View style={styles.loadingView}>
+                <Text style={{ marginTop: 10, color: '#fff' }}>
+                    Erro: Dados do sumário não disponíveis.
+                </Text>
+            </View>
+        );
+    }
+
     return(
     <ImageBackground
         style = {styles.background}
@@ -68,13 +87,13 @@ function Dashboard({navigation}: DashProps) {
                     <InfoCard 
                     title="Último" 
                     subtitle="Sorteio" 
-                    content={{text: "15/02/25", size: 22}}
-                    footer="Grupo Star"
+                    content={{text: summaryInfo.lastDrawDate, size: 22}}
+                    footer={summaryInfo?.lastDrawGroup}
                     />
                     <InfoCard 
                     title="Total de" 
                     subtitle="Sorteios" 
-                    content={{text: "15", size: 50}}
+                    content={{text: summaryInfo.totalDraws.toString(), size: 50}}
                     />
                 </View>
                 <ListPlayerCard title="Top Jogadores" players={players}/>
