@@ -4,3 +4,8 @@ export type GroupInfo = {
     location: string;
     numberOfPlayers: number;
 };
+
+export type GroupRequest = {
+    name: string;
+    location: string;
+}

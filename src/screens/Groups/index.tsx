@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {Text, View, ImageBackground, ScrollView, ActivityIndicator, Alert} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,39 +25,47 @@ function Groups() {
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
 
-    useEffect(() => {
-        async function loadGroups() {
-            if (token && !isLoadingAuth) {
-                try {
-                    setLoadingGroups(true);
-                    const data = await getGroups();
-                    setGroups(data);
-                } catch (error) {
-                    Alert.alert("Erro", "Erro ao carregar grupos.");
-                } finally {
-                    setLoadingGroups(false);
-                }
-            } else if (!token && !isLoadingAuth) {
-                console.warn("GROUPS SCREEN: Nenhum token disponível para carregar grupos.");
-            }
-        }
-        loadGroups();
-    }, [token, isLoadingAuth]);
-
     const handleCardPress = (name: string) => {
-    navigation.navigate("GroupDetails", { title: name });
+        navigation.navigate("GroupDetails", { title: name });
+    };
+    
+    const handleCardLongPress = (name: string) => {
+        setSelectedGroup(prev => (prev === name ? null : name));
     };
 
-  const handleCardLongPress = (name: string) => {
-    setSelectedGroup(prev => (prev === name ? null : name));
-  };
+    const fetchGroups= useCallback(async () => {
+            if (!token || isLoadingAuth) {
+                console.warn("GROUPS SCREEN: Token não disponível ou autenticação em andamento para carregar jogadores.");
+                setLoadingGroups(false);
+                return;
+            }
+    
+            setLoadingGroups(true);
+            try {
+                const data = await getGroups();
+                setGroups(data);
+            } catch (error) {
+                console.error("GROUPS SCREEN: Erro ao carregar jogadores:", error);
+                Alert.alert("Erro", "Erro ao carregar a lista de jogadores.");
+            } finally {
+                setLoadingGroups(false);
+            }
+        }, [token, isLoadingAuth]);
+    
+        useEffect(() => {
+            fetchGroups();
+        }, [fetchGroups]);
+    
+    const handleNewGroupRegistered = () => {
+        fetchGroups();
+    };
 
-  const handleRemove = () => {
-    if (!selectedGroup) return;
-    // API remove group logic
-    // após remover, limpar seleção
-    setSelectedGroup(null);
-  };
+    const handleRemove = () => {
+        if (!selectedGroup) return;
+        // API remove group logic
+        // após remover, limpar seleção
+        setSelectedGroup(null);
+    };
 
     if (isLoadingAuth || loadingGroups) {
         return (
@@ -103,7 +111,8 @@ function Groups() {
                 }
             </ScrollView>
 
-            <NewGroupModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
+            <NewGroupModal visible={modalVisible} onClose={()=> setModalVisible(false)}
+                onGroupRegistered={handleNewGroupRegistered} />
         </View>
     </ImageBackground>
     );
