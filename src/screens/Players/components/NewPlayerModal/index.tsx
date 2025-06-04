@@ -12,24 +12,40 @@ import styles from "./styles";
 interface NewPlayerModalProps{
     visible: boolean;
     onClose: ()=> void;
+    onPlayerRegistered: ()=> void;
 }
 
-function NewPlayerModal({visible, onClose}: NewPlayerModalProps) {
+function NewPlayerModal({visible, onClose, onPlayerRegistered}: NewPlayerModalProps) {
     const [name, setName] = useState('');
     const [overall, setOverall] = useState('');
 
     const HandleRegister = async () => {
-            const response = await registerPlayer({
-                name,
-                overall
-            });
-    
-            Alert.alert(
-                response.isError ? "Erro no Cadastro" : "Sucesso",
-                response.message,
-                [{ text: "OK", onPress: () => { if (!response.isError) onClose(); } }]
-            );
+
+        if (!name.trim() || !overall.trim()) {
+            Alert.alert("Erro", "Nome e Overall não podem estar vazios.");
+            return;
         }
+
+        const response = await registerPlayer({
+            name,
+            overall
+        });
+    
+        Alert.alert(
+            response.isError ? "Erro no Cadastro" : "Sucesso",
+            response.message,
+            [{ text: "OK", onPress: () => { 
+                if (!response.isError){
+                    onClose();
+                    onPlayerRegistered();
+
+                    setName('');
+                    setOverall('');
+                }  
+            } 
+        }]
+        );
+    }
 
     return(
         <Modal visible={visible} animationType="fade"
@@ -44,11 +60,11 @@ function NewPlayerModal({visible, onClose}: NewPlayerModalProps) {
 
                     <View style={styles.divider}/>
                     <Input icon="account-box" placeholder="Nome" defaultColor="#023e8a"
-                     onChangeText={setName}/> 
+                     onChangeText={setName} value={name} /> 
 
                     <View style={styles.divider}/>
                     <Input icon="star-shooting" placeholder="Overall" defaultColor="#023e8a"
-                    onChangeText={setOverall}/>            
+                    onChangeText={setOverall} value={overall} />            
 
                 </ScrollView>
                 <View style={styles.buttonContainer}>

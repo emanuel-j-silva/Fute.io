@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {Text, View, ImageBackground, Alert, ActivityIndicator} from "react-native"
 import CustomButton from "../../components/CustomButton";
 import ListPlayerCard from "../../components/ListPlayerCard";
@@ -18,11 +18,37 @@ function Players() {
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
     
-
     const handlePlayerLongPress = (name: string) => {
         setSelectedPlayer(prev => (prev === name ? null : name));
     };
     
+    const fetchPlayers = useCallback(async () => {
+        if (!token || isLoadingAuth) {
+            console.warn("PLAYERS SCREEN: Token não disponível ou autenticação em andamento para carregar jogadores.");
+            setLoadingPlayers(false);
+            return;
+        }
+
+        setLoadingPlayers(true);
+        try {
+            const data = await getAllPlayers();
+            setPlayers(data);
+        } catch (error) {
+            console.error("PLAYERS SCREEN: Erro ao carregar jogadores:", error);
+            Alert.alert("Erro", "Erro ao carregar a lista de jogadores.");
+        } finally {
+            setLoadingPlayers(false);
+        }
+    }, [token, isLoadingAuth]);
+
+    useEffect(() => {
+        fetchPlayers();
+    }, [fetchPlayers]);
+
+    const handleNewPlayerRegistered = () => {
+        fetchPlayers();
+    };
+
     const handleRemove = () => {
         if (!selectedPlayer) return;
         // API remove player logic
@@ -30,24 +56,6 @@ function Players() {
         setSelectedPlayer(null);
     };
 
-    useEffect(() => {
-            async function loadPlayers() {
-                if (token && !isLoadingAuth) {
-                    try {
-                        setLoadingPlayers(true);
-                        const data = await getAllPlayers();
-                        setPlayers(data);
-                    } catch (error) {
-                        Alert.alert("Erro", "Erro ao carregar grupos.");
-                    } finally {
-                        setLoadingPlayers(false);
-                    }
-                } else if (!token && !isLoadingAuth) {
-                    console.warn("PLAYERS SCREEN: Nenhum token disponível para carregar jogadores.");
-                }
-            }
-            loadPlayers();
-        }, [token, isLoadingAuth]);
     if (isLoadingAuth || loadingPlayers) {
         return (
             <View style={styles.loadingView}>
@@ -79,7 +87,8 @@ function Players() {
             </View>
             <ListPlayerCard title="Todos os Jogadores" players={players} pressable={true} selectedName={selectedPlayer}
                 onLongPress={handlePlayerLongPress}/>
-            <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
+            <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}
+                onPlayerRegistered={handleNewPlayerRegistered}/>
         </View>
     </ImageBackground>
     );
