@@ -8,6 +8,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../types/navigation";
 import styles from "./styles";
+import { mockPlayers } from "../../data/mockPlayers";
 
 type GroupDetailsRouteProp = RouteProp<RootStackParamList, "GroupDetails">;
 type GroupDetailsNavigationProp = StackNavigationProp<RootStackParamList, "GroupDetails">
@@ -56,7 +57,8 @@ function GroupDetails() {
                             disabled={!selectedPlayer} />
                     </View>
                 </View>
-                <ListPlayerCard title="Jogadores" pressable={true} selectedName={selectedPlayer}
+                <ListPlayerCard title="Jogadores" players={mockPlayers}
+                    pressable={true} selectedName={selectedPlayer}
                     onLongPress={handlePlayerLongPress} />
                 <CustomButton title="Ir para Sorteio" onPress={()=>navigation.navigate("Draw")}
                     fontSize={16} paddingHorizontal={100} paddingVertical={25} 
