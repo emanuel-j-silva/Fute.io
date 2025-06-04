@@ -4,3 +4,8 @@ export type PlayerInfo = {
     overall: number;
     urlPhoto?: string;
 }
+
+export type PlayerRequest = {
+    name: string;
+    overall: string;
+}
