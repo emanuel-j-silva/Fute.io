@@ -9,6 +9,9 @@ import FabButton from "../../components/FabButton";
 
 import { AuthContext } from "../../contexts/AuthContext";
 
+import { getUserInfo } from "../../services/api/endpoints/user";
+import { UserInfo } from "../../../types/user";
+
 import { getTopPlayers } from "../../services/api/endpoints/players";
 import { PlayerInfo } from "../../../types/players";
 
@@ -27,6 +30,7 @@ type StackDashList = {
 function Dashboard({navigation}: DashProps) {
     const [players, setPlayers] = useState<PlayerInfo[]>([]);
     const [summaryInfo, setSummaryInfo] = useState<SummaryInfo | undefined>(undefined);
+    const [userInfo, setUserInfo] = useState<UserInfo | undefined>(undefined);
 
     const [loadingData, setLoadingData] = useState(true);
 
@@ -37,6 +41,9 @@ function Dashboard({navigation}: DashProps) {
                 if (token && !isLoadingAuth) {
                     try {
                         setLoadingData(true);
+
+                        const userInfoData = await getUserInfo();
+                        setUserInfo(userInfoData);
 
                         const playersData = await getTopPlayers();
                         setPlayers(playersData);
@@ -64,11 +71,11 @@ function Dashboard({navigation}: DashProps) {
         );
     }
 
-    if (!summaryInfo) {
+    if (!summaryInfo || !userInfo) {
         return (
             <View style={styles.loadingView}>
                 <Text style={{ marginTop: 10, color: '#fff' }}>
-                    Erro: Dados do sumário não disponíveis.
+                    Erro: Dados do Dashboard não disponíveis.
                 </Text>
             </View>
         );
@@ -81,7 +88,7 @@ function Dashboard({navigation}: DashProps) {
         resizeMode="cover"
     >
         <View style={styles.overlay}>
-            <DashboardHeader name="Emanuel Silva"/>
+            <DashboardHeader name={userInfo.name}/>
             <View style={styles.content}>
                 <View style={styles.cardsRow}>
                     <InfoCard 
