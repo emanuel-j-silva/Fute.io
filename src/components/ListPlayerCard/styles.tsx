@@ -18,7 +18,20 @@ const styles = StyleSheet.create({
     },
     scroll:{
         marginBottom: 10
-    }
+    },
+    placeholderText: {
+            color: '#050517',
+            textAlign: 'center',
+            marginTop: 20,
+            fontSize: 16,
+            fontStyle: 'italic',
+        },
+        placeholderContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 20,
+        }
 });
 
 export default styles;
