@@ -1,5 +1,6 @@
 import api from "../..";
 import { GroupInfo, GroupRequest } from "../../../../../types/group";
+import { PlayerInfo } from "../../../../../types/players";
 import { RegisterResponse } from "../../../../../types/register";
 
 export async function getGroups(): Promise<GroupInfo[]> {
@@ -36,4 +37,14 @@ export async function registerGroup(data: GroupRequest): Promise<RegisterRespons
             };
         }
     }
+}
+
+export async function getPlayersByGroup(groupId: string): Promise<PlayerInfo[]> {
+    const response = await api.get(`/groups/${groupId}/players`);
+    return response.data;
+}
+
+export async function getPlayersNotInGroup(groupId: string): Promise<PlayerInfo[]> {
+    const response = await api.get(`/groups/${groupId}/players/not-in`);
+    return response.data;
 }

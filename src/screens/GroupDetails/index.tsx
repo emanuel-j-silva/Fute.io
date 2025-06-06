@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Text, View, ImageBackground} from "react-native";
+import React, {useState, useEffect, useCallback, useContext} from "react";
+import {Text, View, ImageBackground, Alert, ActivityIndicator} from "react-native";
 import ListPlayerCard from "../../components/ListPlayerCard";
 import CustomButton from "../../components/CustomButton";
 import AddPlayersModal from "./components/AddPlayersModal";
@@ -7,8 +7,13 @@ import AddPlayersModal from "./components/AddPlayersModal";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../types/navigation";
+
+import { PlayerInfo } from "../../../types/players";
+import { getPlayersByGroup } from "../../services/api/endpoints/groups";
+import { AuthContext } from "../../contexts/AuthContext";
+
 import styles from "./styles";
-import { mockPlayers } from "../../data/mockPlayers";
+
 
 type GroupDetailsRouteProp = RouteProp<RootStackParamList, "GroupDetails">;
 type GroupDetailsNavigationProp = StackNavigationProp<RootStackParamList, "GroupDetails">
@@ -16,10 +21,37 @@ type GroupDetailsNavigationProp = StackNavigationProp<RootStackParamList, "Group
 function GroupDetails() {
     const navigation = useNavigation<GroupDetailsNavigationProp>();
     const route = useRoute<GroupDetailsRouteProp>();
-    const { title } = route.params;
+    const { title, groupId } = route.params;
 
+    const [players, setPlayers] = useState<PlayerInfo[]>([]);
+    const [loadingPlayers, setLoadingPlayers] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+
+    const { token, isLoadingAuth } = useContext(AuthContext); 
+
+    const fetchPlayers = useCallback(async () => {
+            if (!token || isLoadingAuth) {
+                console.warn("GROUP DETAILS SCREEN: Token não disponível ou autenticação em andamento para carregar jogadores.");
+                setLoadingPlayers(false);
+                return;
+            }
+    
+            setLoadingPlayers(true);
+            try {
+                const data = await getPlayersByGroup(groupId);
+                setPlayers(data);
+            } catch (error) {
+                console.error("PLAYERS SCREEN: Erro ao carregar jogadores:", error);
+                Alert.alert("Erro", "Erro ao carregar a lista de jogadores.");
+            } finally {
+                setLoadingPlayers(false);
+            }
+        }, [token, isLoadingAuth]);
+    
+    useEffect(() => {
+        fetchPlayers();
+    }, [fetchPlayers]);
     
     const handlePlayerLongPress = (name: string) => {
         setSelectedPlayer(prev => (prev === name ? null : name));
@@ -31,6 +63,15 @@ function GroupDetails() {
         // após remover, limpar seleção
         setSelectedPlayer(null);
     };
+
+    if (isLoadingAuth || loadingPlayers) {
+        return (
+            <View style={styles.loadingView}>
+                <ActivityIndicator size="large" color="#0077B6" />
+                <Text style={{ marginTop: 10, color: '#fff' }}>Carregando...</Text>
+            </View>
+        );
+    }
 
     return(
     <ImageBackground
@@ -57,7 +98,7 @@ function GroupDetails() {
                             disabled={!selectedPlayer} />
                     </View>
                 </View>
-                <ListPlayerCard title="Jogadores" players={mockPlayers}
+                <ListPlayerCard title="Jogadores" players={players}
                     pressable={true} selectedName={selectedPlayer}
                     onLongPress={handlePlayerLongPress} />
                 <CustomButton title="Ir para Sorteio" onPress={()=>navigation.navigate("Draw")}

@@ -4,5 +4,5 @@ export type RootStackParamList = {
   Draw: undefined;
   DrawResult: undefined;
   Groups: undefined;
-  GroupDetails: {title: string};
+  GroupDetails: {title: string, groupId: string};
 };

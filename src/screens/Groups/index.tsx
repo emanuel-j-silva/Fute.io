@@ -25,8 +25,8 @@ function Groups() {
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
 
-    const handleCardPress = (name: string) => {
-        navigation.navigate("GroupDetails", { title: name });
+    const handleCardPress = (name: string, groupId: string) => {
+        navigation.navigate("GroupDetails", { title: name, groupId: groupId });
     };
     
     const handleCardLongPress = (name: string) => {
@@ -104,9 +104,9 @@ function Groups() {
                         name={group.name} numPlayers={group.numberOfPlayers} 
                         location={group.location} 
                         selected={selectedGroup === group.name}
-                        onPress={()=> handleCardPress(group.name)}
+                        onPress={()=> handleCardPress(group.name, group.id)}
                         onLongPress={()=> handleCardLongPress(group.name)}/>
-                ))) : 
+                ))) :
                 (<Text style={{ color: '#fff', textAlign: 'center', marginTop: 20 }}>Nenhum grupo encontrado.</Text>)
                 }
             </ScrollView>
