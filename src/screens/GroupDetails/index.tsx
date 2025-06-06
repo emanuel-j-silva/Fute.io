@@ -105,7 +105,8 @@ function GroupDetails() {
                     fontSize={16} paddingHorizontal={100} paddingVertical={25} 
                     backgroundColor="#03045E" pressedBackgroundColor="#0077B6" />
             </View>
-            <AddPlayersModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
+            <AddPlayersModal visible={modalVisible} onClose={()=> setModalVisible(false)}
+                groupId={groupId}/>
         </View>
     </ImageBackground>
     );

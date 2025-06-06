@@ -44,6 +44,12 @@ const styles = StyleSheet.create({
   buttonContainer:{
     paddingHorizontal: 30,
     marginVertical: 20
+  },
+  loadingView:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#050517"
   }
 });
 
