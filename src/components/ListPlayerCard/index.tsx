@@ -9,13 +9,13 @@ interface ListPlayerCardProps{
     players: PlayerInfo[];
     colorTitle?: string;
     pressable?: boolean;
-    selectedName?: string | null;
-    selectedNames?: string[];
-    onLongPress?: (name: string) => void;
+    selectedId?: number | null;
+    selectedIds?: number[];
+    onLongPress?: (playerId: number) => void;
 }
 
 function ListPlayerCard({title, players, colorTitle, pressable=false, 
-    selectedName=null, selectedNames = [], onLongPress}: ListPlayerCardProps) {
+    selectedId=null, selectedIds = [], onLongPress}: ListPlayerCardProps) {
 
     return(
     <View style={styles.container}>
@@ -23,9 +23,9 @@ function ListPlayerCard({title, players, colorTitle, pressable=false,
         <ScrollView style={styles.scroll}>
                 {players.length > 0 ? (
                     players.map((player,index) => {
-                        const isSelected = selectedNames.length > 0
-                            ? selectedNames.includes(player.name)
-                            : selectedName === player.name;
+                        const isSelected = selectedIds.length > 0
+                            ? selectedIds.includes(player.id)
+                            : selectedId === player.id;
 
                         return (
                             <PlayerCard
@@ -33,7 +33,7 @@ function ListPlayerCard({title, players, colorTitle, pressable=false,
                                 name={player.name}
                                 overall={player.overall}
                                 isPressable={pressable}
-                                onLongPress={() => onLongPress && onLongPress(player.name)}
+                                onLongPress={() => onLongPress && onLongPress(player.id)}
                                 selected={isSelected}
                             />
                         );

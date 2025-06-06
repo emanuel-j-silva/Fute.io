@@ -26,7 +26,7 @@ function GroupDetails() {
     const [players, setPlayers] = useState<PlayerInfo[]>([]);
     const [loadingPlayers, setLoadingPlayers] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+    const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
 
@@ -38,6 +38,7 @@ function GroupDetails() {
             }
     
             setLoadingPlayers(true);
+            setSelectedPlayer(null);
             try {
                 const data = await getPlayersByGroup(groupId);
                 setPlayers(data);
@@ -47,14 +48,18 @@ function GroupDetails() {
             } finally {
                 setLoadingPlayers(false);
             }
-        }, [token, isLoadingAuth]);
+        }, [token, isLoadingAuth, groupId]);
     
     useEffect(() => {
         fetchPlayers();
     }, [fetchPlayers]);
     
-    const handlePlayerLongPress = (name: string) => {
-        setSelectedPlayer(prev => (prev === name ? null : name));
+    const handlePlayerLongPress = (playerId: number) => {
+        setSelectedPlayer(prev => (prev === playerId ? null : playerId));
+    };
+
+    const handleNewPlayersRegistered = () => {
+        fetchPlayers();
     };
 
     const handleRemove = () => {
@@ -99,14 +104,14 @@ function GroupDetails() {
                     </View>
                 </View>
                 <ListPlayerCard title="Jogadores" players={players}
-                    pressable={true} selectedName={selectedPlayer}
+                    pressable={true} selectedId={selectedPlayer}
                     onLongPress={handlePlayerLongPress} />
                 <CustomButton title="Ir para Sorteio" onPress={()=>navigation.navigate("Draw")}
                     fontSize={16} paddingHorizontal={100} paddingVertical={25} 
                     backgroundColor="#03045E" pressedBackgroundColor="#0077B6" />
             </View>
             <AddPlayersModal visible={modalVisible} onClose={()=> setModalVisible(false)}
-                groupId={groupId}/>
+                groupId={groupId} onPlayersRegistered={handleNewPlayersRegistered}/>
         </View>
     </ImageBackground>
     );

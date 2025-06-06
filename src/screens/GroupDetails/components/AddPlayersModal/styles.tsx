@@ -45,12 +45,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     marginVertical: 20
   },
-  loadingView:{
+  loadingContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#050517"
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Fundo semi-transparente para o modal
+  },
+  loadingText: {
+    marginTop: 10,
+    color: '#fff',
+}
 });
 
 export default styles;

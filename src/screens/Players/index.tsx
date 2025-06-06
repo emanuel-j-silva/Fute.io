@@ -14,12 +14,12 @@ function Players() {
     const [players, setPlayers] = useState<PlayerInfo[]>([]);
     const [loadingPlayers, setLoadingPlayers] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+    const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
     
-    const handlePlayerLongPress = (name: string) => {
-        setSelectedPlayer(prev => (prev === name ? null : name));
+    const handlePlayerLongPress = (playerId: number) => {
+        setSelectedPlayer(prev => (prev === playerId ? null : playerId));
     };
     
     const fetchPlayers = useCallback(async () => {
@@ -85,7 +85,7 @@ function Players() {
                         paddingHorizontal={30} paddingVertical={30} disabled={!selectedPlayer}/>
                 </View>
             </View>
-            <ListPlayerCard title="Todos os Jogadores" players={players} pressable={true} selectedName={selectedPlayer}
+            <ListPlayerCard title="Todos os Jogadores" players={players} pressable={true} selectedId={selectedPlayer}
                 onLongPress={handlePlayerLongPress}/>
             <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}
                 onPlayerRegistered={handleNewPlayerRegistered}/>

@@ -17,7 +17,7 @@ type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
 
 function Draw() {
   const navigation = useNavigation<DrawNavigationProp>();
-  const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+  const [selectedPlayers, setSelectedPlayers] = useState<number[]>([]);
   const [numTeams, setNumTeams] = useState<string>("");
 
   useFocusEffect(
@@ -38,9 +38,9 @@ function Draw() {
     }, [])
   );
 
-  const togglePlayer = (name: string) => {
+  const togglePlayer = (playerId: number) => {
     setSelectedPlayers(prev =>
-      prev.includes(name) ? prev.filter(n => n !== name) : [...prev, name]
+      prev.includes(playerId) ? prev.filter(id => id !== playerId) : [...prev, playerId]
     );
   };
 
@@ -61,7 +61,7 @@ function Draw() {
         <View style={styles.overlay}>            
             <GroupItem />
             <ListPlayerCard title="Jogadores" players={mockPlayers}
-            pressable={true} selectedNames={selectedPlayers}
+            pressable={true} selectedIds={selectedPlayers}
             onLongPress={togglePlayer}/>
             <View>
                 <Input placeholder="Número de times" type="numeric" 
