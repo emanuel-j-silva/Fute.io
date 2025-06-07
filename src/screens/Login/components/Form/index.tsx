@@ -26,10 +26,9 @@ function Form({navigation}: FormProps){
   const [modalVisible, setModalVisible] = useState(false);
 
   async function handleLogin(){
-    navigation.replace("MainTabs");
-    /*try{
-      const {token} = await loginApi({email, password});
-
+    //navigation.replace("MainTabs");
+    try{
+      const {token} = await loginApi({email, password});      
       if(token){
         await login(token);
         navigation.replace("MainTabs");
@@ -39,7 +38,7 @@ function Form({navigation}: FormProps){
     }catch(error){
       console.error("Erro durante o login:", error);
       Alert.alert("Erro de autenticação", "Verifique seu email e senha.");
-    }*/
+    }
   }
 
   return(

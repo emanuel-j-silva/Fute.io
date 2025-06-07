@@ -44,7 +44,17 @@ const styles = StyleSheet.create({
   buttonContainer:{
     paddingHorizontal: 30,
     marginVertical: 20
-  }
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Fundo semi-transparente para o modal
+  },
+  loadingText: {
+    marginTop: 10,
+    color: '#fff',
+}
 });
 
 export default styles;

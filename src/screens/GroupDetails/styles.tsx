@@ -33,6 +33,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     columnGap: 10,
     marginBottom: 35
+  },
+  loadingView:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#050517"
   }
 });
 

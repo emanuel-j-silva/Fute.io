@@ -1,25 +1,69 @@
-import React, { useState } from "react";
-import {Text, View, ImageBackground, ScrollView} from "react-native"
+import React, { useState, useContext, useEffect, useCallback } from "react";
+import {Text, View, ImageBackground, Alert, ActivityIndicator} from "react-native"
 import CustomButton from "../../components/CustomButton";
 import ListPlayerCard from "../../components/ListPlayerCard";
-
-import styles from "./styles";
 import NewPlayerModal from "./components/NewPlayerModal";
 
-function Players() {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+import { getAllPlayers } from "../../services/api/endpoints/players";
+import { PlayerInfo } from "../../../types/players";
+import { AuthContext } from "../../contexts/AuthContext";
 
-    const handlePlayerLongPress = (name: string) => {
-        setSelectedPlayer(prev => (prev === name ? null : name));
+import styles from "./styles";
+
+function Players() {
+    const [players, setPlayers] = useState<PlayerInfo[]>([]);
+    const [loadingPlayers, setLoadingPlayers] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
+
+    const { token, isLoadingAuth } = useContext(AuthContext); 
+    
+    const handlePlayerLongPress = (playerId: number) => {
+        setSelectedPlayer(prev => (prev === playerId ? null : playerId));
     };
     
+    const fetchPlayers = useCallback(async () => {
+        if (!token || isLoadingAuth) {
+            console.warn("PLAYERS SCREEN: Token não disponível ou autenticação em andamento para carregar jogadores.");
+            setLoadingPlayers(false);
+            return;
+        }
+
+        setLoadingPlayers(true);
+        try {
+            const data = await getAllPlayers();
+            setPlayers(data);
+        } catch (error) {
+            console.error("PLAYERS SCREEN: Erro ao carregar jogadores:", error);
+            Alert.alert("Erro", "Erro ao carregar a lista de jogadores.");
+        } finally {
+            setLoadingPlayers(false);
+        }
+    }, [token, isLoadingAuth]);
+
+    useEffect(() => {
+        fetchPlayers();
+    }, [fetchPlayers]);
+
+    const handleNewPlayerRegistered = () => {
+        fetchPlayers();
+    };
+
     const handleRemove = () => {
-    if (!selectedPlayer) return;
-    // API remove player logic
-    // após remover, limpar seleção
-    setSelectedPlayer(null);
-  };
+        if (!selectedPlayer) return;
+        // API remove player logic
+        // após remover, limpar seleção
+        setSelectedPlayer(null);
+    };
+
+    if (isLoadingAuth || loadingPlayers) {
+        return (
+            <View style={styles.loadingView}>
+                <ActivityIndicator size="large" color="#0077B6" />
+                <Text style={{ marginTop: 10, color: '#fff' }}>Carregando...</Text>
+            </View>
+        );
+    }
 
     return(
     <ImageBackground
@@ -41,9 +85,10 @@ function Players() {
                         paddingHorizontal={30} paddingVertical={30} disabled={!selectedPlayer}/>
                 </View>
             </View>
-            <ListPlayerCard title="Todos os Jogadores" pressable={true} selectedName={selectedPlayer}
+            <ListPlayerCard title="Todos os Jogadores" players={players} pressable={true} selectedId={selectedPlayer}
                 onLongPress={handlePlayerLongPress}/>
-            <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}/>
+            <NewPlayerModal visible={modalVisible} onClose={()=> setModalVisible(false)}
+                onPlayerRegistered={handleNewPlayerRegistered}/>
         </View>
     </ImageBackground>
     );

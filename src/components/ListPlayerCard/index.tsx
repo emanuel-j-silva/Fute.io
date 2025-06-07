@@ -1,35 +1,49 @@
 import React from "react";
 import {Text, View, ScrollView} from "react-native"
 import PlayerCard from "../../components/PlayerCard";
-import { mockPlayers } from "../../data/mockPlayers";
+import { PlayerInfo } from "../../../types/players";
 import styles from "./styles";
 
 interface ListPlayerCardProps{
     title: string;
+    players: PlayerInfo[];
     colorTitle?: string;
     pressable?: boolean;
-    selectedName?: string | null;
-    selectedNames?: string[];
-    onLongPress?: (name: string) => void;
+    selectedId?: number | null;
+    selectedIds?: number[];
+    onLongPress?: (playerId: number) => void;
 }
 
-function ListPlayerCard({title, colorTitle, pressable=false, 
-    selectedName=null, selectedNames = [], onLongPress}: ListPlayerCardProps) {
+function ListPlayerCard({title, players, colorTitle, pressable=false, 
+    selectedId=null, selectedIds = [], onLongPress}: ListPlayerCardProps) {
 
     return(
     <View style={styles.container}>
         <Text style={[styles.title, {color: colorTitle}]}>{title}</Text>
         <ScrollView style={styles.scroll}>
-            {mockPlayers.map((player,index) => {
-                const isSelected = selectedNames.length > 0
-            ? selectedNames.includes(player.name)
-            : selectedName === player.name;
+                {players.length > 0 ? (
+                    players.map((player,index) => {
+                        const isSelected = selectedIds.length > 0
+                            ? selectedIds.includes(player.id)
+                            : selectedId === player.id;
 
-            return (<PlayerCard key={index} name={player.name} overall={player.overall} 
-                    isPressable={pressable}  onLongPress={() => onLongPress && onLongPress(player.name)}
-                    selected={isSelected}/>);
-            })}
-        </ScrollView>
+                        return (
+                            <PlayerCard
+                                key={player.id || index}
+                                name={player.name}
+                                overall={player.overall}
+                                isPressable={pressable}
+                                onLongPress={() => onLongPress && onLongPress(player.id)}
+                                selected={isSelected}
+                            />
+                        );
+                    })
+                ) : (
+                    <View style={styles.placeholderContainer}>
+                        <Text style={styles.placeholderText}>Ainda não há jogadores.</Text>
+                    </View>
+                )}
+            </ScrollView>
     </View> 
     );
 }

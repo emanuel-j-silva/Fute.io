@@ -30,7 +30,13 @@ const styles = StyleSheet.create({
         fontSize: 52,
         color: "white",
         fontFamily: "FasterOne"
-    }
+    },
+    loadingView:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#050517"
+  }
 });
 
 export default styles;
