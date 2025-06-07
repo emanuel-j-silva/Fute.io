@@ -12,6 +12,29 @@ const styles = StyleSheet.create({
         color: "#D9D9D9",
         fontSize: 16
     },
+    overlayPressable: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'transparent',
+        zIndex: 5
+    },
+    dropdown:{
+        backgroundColor: '#050517',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#0077B6',
+        maxHeight: 200,
+        overflow: 'hidden',
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        zIndex: 10,
+    },
     button:{
         flexDirection: "row",
         alignItems: "center",
@@ -27,17 +50,15 @@ const styles = StyleSheet.create({
         color: "#D9D9D9",
         fontSize: 16
     },
-    dropdown:{
-        backgroundColor: "#050517",
-        borderRadius: 8,
-        paddingVertical: 5,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 6,
-        elevation: 10,
-        zIndex: 9999,   
-    }
+    loadingContainer: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 20,
+        },
+        loadingText: {
+            marginTop: 10,
+            color: '#D9D9D9',
+        }
 });
 
 export default styles;

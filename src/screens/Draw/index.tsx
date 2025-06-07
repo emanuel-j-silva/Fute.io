@@ -59,7 +59,7 @@ function Draw() {
         resizeMode="cover"
     >
         <View style={styles.overlay}>            
-            <GroupItem />
+            <GroupItem onGroupSelect={()=>{}} selectedGroupId={null}/>
             <ListPlayerCard title="Jogadores" players={mockPlayers}
             pressable={true} selectedIds={selectedPlayers}
             onLongPress={togglePlayer}/>
