@@ -10,11 +10,12 @@ import Input from "../../components/Input";
 
 import { RootStackParamList } from "../../../types/navigation";
 import { PlayerInfo } from "../../../types/players";
-import { getPlayersByGroup } from "../../services/api/endpoints/groups";
+import { getPlayersByGroup, performDraw } from "../../services/api/endpoints/groups";
 import { AuthContext } from "../../contexts/AuthContext";
-import { mockPlayers } from "../../data/mockPlayers";
 
 import styles from "./styles";
+import { DrawInfo, DrawRequest } from "../../../types/draw";
+import { RegisterResponse } from "../../../types/register";
 
 type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
 
@@ -26,6 +27,7 @@ function Draw() {
   const [loadingPlayers, setLoadingPlayers] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState<number[]>([]);
   const [numTeams, setNumTeams] = useState<string>("");
+  const [isDrawing, setIsDrawing] = useState(false);
 
   const {token, isLoadingAuth} = useContext(AuthContext);
 
@@ -85,10 +87,42 @@ function Draw() {
   };
 
   const canDraw =
-    selectedPlayers.length > 0 && Number(numTeams) > 0 && selectedPlayers.length > Number(numTeams);
+    selectedGroupId !== null &&
+    selectedPlayers.length > 2 &&
+    Number(numTeams) > 1 &&
+    selectedPlayers.length >= Number(numTeams);
+    
+  const handleDraw = async () => {
+        if (!canDraw || isDrawing) {
+            return;
+        }
 
-  const handleDraw = () => {
-    navigation.navigate("DrawResult");
+        if (!selectedGroupId) {
+            Alert.alert("Atenção", "Por favor, selecione um grupo antes de sortear.");
+            return;
+        }
+
+        setIsDrawing(true);
+
+        try {
+          const drawRequest: DrawRequest = {
+            playerIds: selectedPlayers,
+            numberOfTeams: Number(numTeams)
+          };
+            
+          const result: DrawInfo | RegisterResponse = await performDraw(drawRequest, selectedGroupId);
+
+        if ("isError" in result) {
+            Alert.alert("Erro no Sorteio", result.message);
+          } else {
+            navigation.navigate("DrawResult", { teams: result.teams });
+          }
+        } catch (error) {
+          console.error("DRAW SCREEN: Erro inesperado ao realizar sorteio:", error);
+          Alert.alert("Erro", "Ocorreu um erro inesperado ao tentar sortear os times.");
+        } finally {
+          setIsDrawing(false);
+        }
   };
 
 
@@ -107,7 +141,7 @@ function Draw() {
                 <Input placeholder="Número de times" type="numeric" 
                   value={numTeams} onChangeText={setNumTeams}/>
             </View>
-            <CustomButton title="Sortear" onPress={handleDraw}
+            <CustomButton title={isDrawing ? "Sorteando..." : "Sortear"} onPress={handleDraw}
                 backgroundColor="#D9D9D9"  disabled={!canDraw}
                 textColor={canDraw ? "#050517" : "#FFF"}
                 pressedBackgroundColor="#FFFFFF"/>

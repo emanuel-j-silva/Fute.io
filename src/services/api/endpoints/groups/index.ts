@@ -1,4 +1,5 @@
 import api from "../..";
+import { DrawInfo, DrawRequest } from "../../../../../types/draw";
 import { GroupInfo, GroupRequest, AssociatePlayersRequest } from "../../../../../types/group";
 import { PlayerInfo } from "../../../../../types/players";
 import { RegisterResponse } from "../../../../../types/register";
@@ -79,4 +80,37 @@ export async function getPlayersByGroup(groupId: string): Promise<PlayerInfo[]> 
 export async function getPlayersNotInGroup(groupId: string): Promise<PlayerInfo[]> {
     const response = await api.get(`/groups/${groupId}/players/not-in`);
     return response.data;
+}
+
+export async function performDraw(data: DrawRequest, groupId: string):
+        Promise<DrawInfo | RegisterResponse> {
+    
+    try {
+        const response = await api.post(`/groups/${groupId}/draws`, data);
+        return{
+            timestamp: response.data.timestamp,
+            teams: response.data.teams
+        }
+       
+    } catch (error: any) {
+       if (error.response) {
+            const errorMessage = error.response.data.errorMessage || "Erro desconhecido";
+            return {
+                message: errorMessage,
+                isError: true,
+            };
+        } else if (error.request) {
+            // Erro de conexão
+            return {
+                message: "Sem resposta do servidor. Verifique sua conexão.",
+                isError: true,
+            };
+        } else {
+            // Outro tipo de erro
+            return {
+                message: "Erro inesperado: " + error.message,
+                isError: true,
+            };
+        }
+    }
 }

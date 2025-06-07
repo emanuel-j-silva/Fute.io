@@ -19,8 +19,14 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "FasterOne",
     marginBottom: 25
+    },
+    noTeamsContainer:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#050517"
   },
-    
+  
 });
 
 export default styles;
