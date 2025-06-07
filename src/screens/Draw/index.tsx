@@ -1,5 +1,5 @@
-import React, {useState, useCallback} from "react";
-import {View, ImageBackground, BackHandler, Alert} from "react-native";
+import React, {useState, useCallback, useEffect, useContext} from "react";
+import {View, ImageBackground, BackHandler, Alert, ActivityIndicator} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import type { StackNavigationProp } from "@react-navigation/stack";
 
@@ -7,18 +7,27 @@ import ListPlayerCard from "../../components/ListPlayerCard";
 import GroupItem from "./components/GroupItem";
 import CustomButton from "../../components/CustomButton";
 import Input from "../../components/Input";
-import styles from "./styles";
 
 import { RootStackParamList } from "../../../types/navigation";
+import { PlayerInfo } from "../../../types/players";
+import { getPlayersByGroup } from "../../services/api/endpoints/groups";
+import { AuthContext } from "../../contexts/AuthContext";
 import { mockPlayers } from "../../data/mockPlayers";
+
+import styles from "./styles";
 
 type DrawNavigationProp = StackNavigationProp<RootStackParamList, "Draw">;
 
 
 function Draw() {
   const navigation = useNavigation<DrawNavigationProp>();
+  const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
+  const [players, setPlayers] = useState<PlayerInfo[]>([]);
+  const [loadingPlayers, setLoadingPlayers] = useState(false);
   const [selectedPlayers, setSelectedPlayers] = useState<number[]>([]);
   const [numTeams, setNumTeams] = useState<string>("");
+
+  const {token, isLoadingAuth} = useContext(AuthContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -37,6 +46,37 @@ function Draw() {
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     }, [])
   );
+
+  const fetchPlayersForGroup = useCallback(async () => {
+        if (!selectedGroupId) {
+            setPlayers([]);
+            setLoadingPlayers(false);
+            return;
+        }
+
+        if (!token || isLoadingAuth) {
+            console.warn("DRAW SCREEN: Token não disponível ou autenticação em andamento. Não carregando jogadores.");
+            setLoadingPlayers(false);
+            return;
+        }
+
+        setLoadingPlayers(true);
+        setSelectedPlayers([]);
+        try {
+            const data = await getPlayersByGroup(selectedGroupId);
+            setPlayers(data);
+        } catch (error) {
+            console.error("DRAW SCREEN: Erro ao carregar jogadores do grupo:", error);
+            Alert.alert("Erro", "Erro ao carregar a lista de jogadores para o grupo selecionado.");
+            setPlayers([]);
+        } finally {
+            setLoadingPlayers(false);
+        }
+    }, [selectedGroupId, token, isLoadingAuth]);
+
+    useEffect(() => {
+        fetchPlayersForGroup();
+    }, [fetchPlayersForGroup]);
 
   const togglePlayer = (playerId: number) => {
     setSelectedPlayers(prev =>
@@ -59,8 +99,8 @@ function Draw() {
         resizeMode="cover"
     >
         <View style={styles.overlay}>            
-            <GroupItem onGroupSelect={()=>{}} selectedGroupId={null}/>
-            <ListPlayerCard title="Jogadores" players={mockPlayers}
+            <GroupItem onGroupSelect={setSelectedGroupId} selectedGroupId={selectedGroupId}/>
+            <ListPlayerCard title="Jogadores" players={players}
             pressable={true} selectedIds={selectedPlayers}
             onLongPress={togglePlayer}/>
             <View>
