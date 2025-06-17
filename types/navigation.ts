@@ -4,7 +4,7 @@ export type RootStackParamList = {
   Login: undefined;
   MainTabs: undefined;
   Draw: undefined;
-  DrawResult: { teams: TeamInfo[] };
+  DrawResult: { teams: TeamInfo[], timestamp: string };
   Groups: undefined;
   GroupDetails: {title: string, groupId: string};
 };

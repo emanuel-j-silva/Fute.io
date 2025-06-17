@@ -115,7 +115,7 @@ function Draw() {
         if ("isError" in result) {
             Alert.alert("Erro no Sorteio", result.message);
           } else {
-            navigation.navigate("DrawResult", { teams: result.teams });
+            navigation.navigate("DrawResult", { teams: result.teams, timestamp: result.timestamp });
           }
         } catch (error) {
           console.error("DRAW SCREEN: Erro inesperado ao realizar sorteio:", error);
