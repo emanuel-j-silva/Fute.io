@@ -9,10 +9,11 @@ import NewGroupModal from "./components/NewGroupModal";
 import type { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../types/navigation";
 
-import { getGroups } from "../../services/api/endpoints/groups";
+import { getGroups, deleteGroup } from "../../services/api/endpoints/groups";
 import { GroupInfo } from "../../../types/group";
 import { AuthContext } from "../../contexts/AuthContext";
 import styles from "./styles";
+import { RegisterResponse } from "../../../types/register";
 
 type GroupsNavigationProp = StackNavigationProp<RootStackParamList, "Groups">
 
@@ -22,15 +23,17 @@ function Groups() {
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
     const [loadingGroups, setLoadingGroups] = useState(true);
+    const [isDeletingGroup, setIsDeletingGroup] = useState(false);
+    
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
 
-    const handleCardPress = (name: string, groupId: string) => {
-        navigation.navigate("GroupDetails", { title: name, groupId: groupId });
+    const handleCardPress = (groupName: string, groupId: string) => {
+        navigation.navigate("GroupDetails", { title: groupName, groupId: groupId });
     };
     
-    const handleCardLongPress = (name: string) => {
-        setSelectedGroup(prev => (prev === name ? null : name));
+    const handleCardLongPress = (groupId: string) => {
+        setSelectedGroup(prev => (prev === groupId ? null : groupId));
     };
 
     const fetchGroups= useCallback(async () => {
@@ -41,6 +44,7 @@ function Groups() {
             }
     
             setLoadingGroups(true);
+            setSelectedGroup(null);
             try {
                 const data = await getGroups();
                 setGroups(data);
@@ -60,11 +64,47 @@ function Groups() {
         fetchGroups();
     };
 
-    const handleRemove = () => {
-        if (!selectedGroup) return;
-        // API remove group logic
-        // após remover, limpar seleção
-        setSelectedGroup(null);
+    const handleRemove = async () => {
+        if (!selectedGroup || isDeletingGroup) {
+            return;
+        }
+        
+        Alert.alert(
+            "Confirmar Deleção",
+            `Tem certeza que deseja excluir o grupo selecionado?`,
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                    onPress: () => setSelectedGroup(null)
+                },
+                {
+                    text: "Deletar",
+                    onPress: async () => {
+                    setIsDeletingGroup(true);
+
+                    try {
+                        const result: RegisterResponse = await deleteGroup(selectedGroup);
+                                    
+                        if (result.isError) {
+                            Alert.alert("Erro ao Remover", result.message);
+                        } else {
+                            Alert.alert("Sucesso", result.message || "Jogador deletado com sucesso!");
+                            setSelectedGroup(null);
+                            fetchGroups();
+                        }
+                    } catch (error) {
+                        console.error("PLAYERS SCREEN: Erro inesperado ao deletar jogador:", error);
+                        Alert.alert("Erro", "Ocorreu um erro inesperado ao deletar o jogador.");
+                    } finally {
+                        setIsDeletingGroup(false);
+                    }
+                },
+                style: "destructive"
+            },
+        ],
+        { cancelable: true, onDismiss: () => setSelectedGroup(null) }
+        );
     };
 
     if (isLoadingAuth || loadingGroups) {
@@ -103,9 +143,9 @@ function Groups() {
                     <GroupCard key={group.id} 
                         name={group.name} numPlayers={group.numberOfPlayers} 
                         location={group.location} 
-                        selected={selectedGroup === group.name}
+                        selected={selectedGroup === group.id}
                         onPress={()=> handleCardPress(group.name, group.id)}
-                        onLongPress={()=> handleCardLongPress(group.name)}/>
+                        onLongPress={()=> handleCardLongPress(group.id)}/>
                 ))) :
                 (<Text style={{ color: '#fff', textAlign: 'center', marginTop: 20 }}>Nenhum grupo encontrado.</Text>)
                 }
