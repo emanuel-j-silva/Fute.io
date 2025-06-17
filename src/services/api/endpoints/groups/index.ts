@@ -40,6 +40,34 @@ export async function registerGroup(data: GroupRequest): Promise<RegisterRespons
     }
 }
 
+export async function deleteGroup(groupId: string): Promise<RegisterResponse> {
+    try {
+        const response = await api.delete(`/groups/${groupId}`);
+        return {
+            message: response.data.message || "Grupo excluído com sucesso!",
+            isError: false,
+        };
+    } catch (error: any) {
+        if (error.response) {
+            const errorMessage = error.response.data.errorMessage || "Erro desconhecido ao excluir grupo.";
+            return {
+                message: errorMessage,
+                isError: true,
+            };
+        } else if (error.request) {
+            return {
+                message: "Sem resposta do servidor. Verifique sua conexão.",
+                isError: true,
+            };
+        } else {
+            return {
+                message: "Erro inesperado: " + error.message,
+                isError: true,
+            };
+        }
+    }
+}
+
 export async function associatePlayersToGroup(data: AssociatePlayersRequest, groupId: string): 
     Promise<RegisterResponse> {
     try {
@@ -64,6 +92,34 @@ export async function associatePlayersToGroup(data: AssociatePlayersRequest, gro
             };
         } else {
             // Outro tipo de erro
+            return {
+                message: "Erro inesperado: " + error.message,
+                isError: true,
+            };
+        }
+    }
+}
+
+export async function removePlayerFromGroup(groupId: string, playerId: number): Promise<RegisterResponse> {
+    try {
+        const response = await api.delete(`/groups/${groupId}/players/${playerId}`);
+        return {
+            message: response.data.message || "Jogador removido com sucesso!",
+            isError: false,
+        };
+    } catch (error: any) {
+        if (error.response) {
+            const errorMessage = error.response.data.errorMessage || "Erro desconhecido ao remover jogador.";
+            return {
+                message: errorMessage,
+                isError: true,
+            };
+        } else if (error.request) {
+            return {
+                message: "Sem resposta do servidor. Verifique sua conexão.",
+                isError: true,
+            };
+        } else {
             return {
                 message: "Erro inesperado: " + error.message,
                 isError: true,
