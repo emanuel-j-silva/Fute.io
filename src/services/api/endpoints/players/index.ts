@@ -42,3 +42,31 @@ export async function registerPlayer(data: PlayerRequest): Promise<RegisterRespo
         }
     }
 }
+
+export async function deletePlayer(playerId: number): Promise<RegisterResponse> {
+    try {
+        const response = await api.delete(`/players/${playerId}`);
+        return {
+            message: response.data.message || "Jogador deletado com sucesso!",
+            isError: false,
+        };
+    } catch (error: any) {
+        if (error.response) {
+            const errorMessage = error.response.data.errorMessage || "Erro desconhecido ao deletar jogador.";
+            return {
+                message: errorMessage,
+                isError: true,
+            };
+        } else if (error.request) {
+            return {
+                message: "Sem resposta do servidor. Verifique sua conexão.",
+                isError: true,
+            };
+        } else {
+            return {
+                message: "Erro inesperado: " + error.message,
+                isError: true,
+            };
+        }
+    }
+}
