@@ -9,10 +9,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../types/navigation";
 
 import { PlayerInfo } from "../../../types/players";
-import { getPlayersByGroup } from "../../services/api/endpoints/groups";
+import { getPlayersByGroup, removePlayerFromGroup } from "../../services/api/endpoints/groups";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import styles from "./styles";
+import { RegisterResponse } from "../../../types/register";
 
 
 type GroupDetailsRouteProp = RouteProp<RootStackParamList, "GroupDetails">;
@@ -27,6 +28,7 @@ function GroupDetails() {
     const [loadingPlayers, setLoadingPlayers] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedPlayer, setSelectedPlayer] = useState<number | null>(null);
+    const [isRemovingPlayer, setIsRemovingPlayer] = useState(false);
 
     const { token, isLoadingAuth } = useContext(AuthContext); 
 
@@ -62,11 +64,47 @@ function GroupDetails() {
         fetchPlayers();
     };
 
-    const handleRemove = () => {
-        if (!selectedPlayer) return;
-        // API remove player logic
-        // após remover, limpar seleção
-        setSelectedPlayer(null);
+    const handleRemove = async () => {
+        if (!selectedPlayer || !groupId || isRemovingPlayer) {
+            return;
+        }
+
+        Alert.alert(
+            "Confirmar Remoção",
+            `Tem certeza que deseja remover o jogador selecionado?`,
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                    onPress: () => setSelectedPlayer(null)
+                },
+                {
+                    text: "Remover",
+                    onPress: async () => {
+                        setIsRemovingPlayer(true);
+
+                        try {
+                            const result: RegisterResponse = await removePlayerFromGroup(groupId, selectedPlayer);
+                            
+                            if (result.isError) {
+                                Alert.alert("Erro ao Remover", result.message);
+                            } else {
+                                Alert.alert("Sucesso", result.message || "Jogador removido com sucesso!");
+                                setSelectedPlayer(null);
+                                fetchPlayers();
+                            }
+                        } catch (error) {
+                            console.error("GROUP DETAILS SCREEN: Erro inesperado ao remover jogador:", error);
+                            Alert.alert("Erro", "Ocorreu um erro inesperado ao remover o jogador.");
+                        } finally {
+                            setIsRemovingPlayer(false);
+                        }
+                    },
+                    style: "destructive"
+                },
+            ],
+            { cancelable: true, onDismiss: () => setSelectedPlayer(null) }
+        );
     };
 
     if (isLoadingAuth || loadingPlayers) {
